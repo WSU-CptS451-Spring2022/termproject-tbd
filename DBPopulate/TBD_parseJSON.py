@@ -10,30 +10,17 @@ def cleanStr4SQL(s):
 
 def parseBusinessData():
     try:
-    # Connect to an existing database
         connection = psycopg2.connect(user="postgres",
-                                  password="123",
+                                  password="password",
                                   host="127.0.0.1",
                                   port="5432",
                                   database="yelpdb")
-
-        # Create a cursor to perform database operations
         cursor = connection.cursor()
-        # Print PostgreSQL details
-        print("PostgreSQL server information")
-        print(connection.get_dsn_parameters(), "\n")
-        # Executing a SQL query
-        cursor.execute("SELECT version();")
-        # Fetch result
-        record = cursor.fetchone()
-        print("You are connected to - ", record, "\n")
-
-    except (Exception, Error) as error:
-        print("Error while connecting to PostgreSQL", error)
-
+    except:
+        print("couldn't connect")
     #read the JSON file
     # We assume that the Yelp data files are available in the current directory. If not, you should specify the path when you "open" the function. 
-    with open('.//yelp_business.JSON','r') as f: 
+    with open('./yelp_business.JSON','r') as f: 
         line = f.readline()
         count_line = 0
         #read each JSON abject and extract data
@@ -104,29 +91,16 @@ def parseAttributes(a, ret):
 
 def parseUserData():
     try:
-    # Connect to an existing database
         connection = psycopg2.connect(user="postgres",
-                                  password="123",
+                                  password="password",
                                   host="127.0.0.1",
                                   port="5432",
                                   database="yelpdb")
-
-        # Create a cursor to perform database operations
         cursor = connection.cursor()
-        # Print PostgreSQL details
-        print("PostgreSQL server information")
-        print(connection.get_dsn_parameters(), "\n")
-        # Executing a SQL query
-        cursor.execute("SELECT version();")
-        # Fetch result
-        record = cursor.fetchone()
-        print("You are connected to - ", record, "\n")
-
-    except (Exception, Error) as error:
-        print("Error while connecting to PostgreSQL", error)
-
+    except:
+        print("couldn't connect")
     # TO-DO : write code to parse yelp_user.JSON
-    with open('.//yelp_user.JSON','r') as f:  
+    with open('./yelp_user.JSON','r') as f:  
         line = f.readline()
         count_line = 0
         #read each JSON abject and extract data
@@ -154,7 +128,7 @@ def parseFriendsData():
     try:
     # Connect to an existing database
         connection = psycopg2.connect(user="postgres",
-                                  password="123",
+                                  password="password",
                                   host="127.0.0.1",
                                   port="5432",
                                   database="yelpdb")
@@ -173,7 +147,7 @@ def parseFriendsData():
     except (Exception, Error) as error:
         print("Error while connecting to PostgreSQL", error)
     
-    with open('.//yelp_user.JSON','r') as f: 
+    with open('./yelp_user.JSON','r') as f: 
         line = f.readline()
         count_line = 0
         #read each JSON abject and extract data
@@ -192,29 +166,17 @@ def parseFriendsData():
 
 def parseCheckinData():
     try:
-    # Connect to an existing database
         connection = psycopg2.connect(user="postgres",
-                                  password="123",
+                                  password="password",
                                   host="127.0.0.1",
                                   port="5432",
                                   database="yelpdb")
-
-        # Create a cursor to perform database operations
         cursor = connection.cursor()
-        # Print PostgreSQL details
-        print("PostgreSQL server information")
-        print(connection.get_dsn_parameters(), "\n")
-        # Executing a SQL query
-        cursor.execute("SELECT version();")
-        # Fetch result
-        record = cursor.fetchone()
-        print("You are connected to - ", record, "\n")
-
-    except (Exception, Error) as error:
-        print("Error while connecting to PostgreSQL", error)
+    except:
+        print("couldn't connect")
 
     # TO-DO : write code to parse yelp_checkin.JSON
-    with open('.//yelp_checkin.JSON','r') as f:  
+    with open('./yelp_checkin.JSON','r') as f:  
         line = f.readline()
         count_line = 1
         #read each JSON abject and extract data
@@ -234,33 +196,18 @@ def parseCheckinData():
     print(count_line)
     f.close()
 
-
-
 def parseTipData():
     try:
-    # Connect to an existing database
         connection = psycopg2.connect(user="postgres",
-                                  password="123",
+                                  password="password",
                                   host="127.0.0.1",
                                   port="5432",
                                   database="yelpdb")
-
-        # Create a cursor to perform database operations
         cursor = connection.cursor()
-        # Print PostgreSQL details
-        print("PostgreSQL server information")
-        print(connection.get_dsn_parameters(), "\n")
-        # Executing a SQL query
-        cursor.execute("SELECT version();")
-        # Fetch result
-        record = cursor.fetchone()
-        print("You are connected to - ", record, "\n")
-
-    except (Exception, Error) as error:
-        print("Error while connecting to PostgreSQL", error)
-
+    except:
+        print("couldn't connect")
     # TO-DO : write code to parse yelp_tip.JSON
-    with open('.//yelp_tip.JSON','r') as f:  
+    with open('./yelp_tip.JSON','r') as f:  
         outfile =  open('.//tip.txt', 'w')
         line = f.readline()
         count_line = 1
@@ -285,8 +232,8 @@ def parseTipData():
     pass
 
 if __name__ == "__main__":
-    parseBusinessData()
     parseUserData()
     parseFriendsData()
+    parseBusinessData()
     parseCheckinData()
     parseTipData()
