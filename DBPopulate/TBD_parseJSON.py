@@ -38,7 +38,7 @@ def parseBusinessData():
             is_open = str(data["is_open"])
 
             cursor.execute("INSERT INTO Business(business_id, business_name, address, city, state, zip, latitude, longitude, rating)" + 
-            " VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)", (business_id, name, address, state, city, postal_code, latitude, longitude, stars))
+            " VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)", (business_id, name, address, city, state, postal_code, latitude, longitude, stars))
 
             #process business categories
             categories = data["categories"].split(', ')
