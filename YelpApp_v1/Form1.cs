@@ -84,6 +84,9 @@ namespace YelpApp_v1
 
         private void City_SelectedIndexChanged(object sender, EventArgs e)
         {
+            showTips.Visible = false;
+            infoName.Visible = false;
+            infoAddress.Visible = false;
             Zip.Items.Clear();
             Categories.Items.Clear();
             businessGrid.Rows.Clear();
@@ -96,6 +99,9 @@ namespace YelpApp_v1
 
         private void State_SelectedIndexChanged(object sender, EventArgs e)
         {
+            showTips.Visible = false;
+            infoName.Visible = false;
+            infoAddress.Visible = false;
             City.Items.Clear();
             Zip.Items.Clear();
             businessGrid.Rows.Clear();
@@ -119,6 +125,9 @@ namespace YelpApp_v1
 
         private void Zip_SelectedIndexChanged(object sender, EventArgs e)
         {
+            showTips.Visible = false;
+            infoName.Visible = false;
+            infoAddress.Visible = false;
             businessGrid.Rows.Clear();
             Categories.Items.Clear();
             if (Zip.SelectedIndex > -1)
@@ -132,7 +141,7 @@ namespace YelpApp_v1
 
         private void Filter_Click(object sender, EventArgs e)
         {
-            if(Categories.CheckedItems.Count == 0)
+            if (Categories.CheckedItems.Count == 0)
             {
                 businessGrid.Rows.Clear();
                 string sqlStr1 = $"SELECT business_name, address, rating FROM Business WHERE Zip = '{Zip.SelectedItem.ToString()}' ORDER BY business_name;";
@@ -140,6 +149,9 @@ namespace YelpApp_v1
                 return;
             }
             businessGrid.Rows.Clear();
+            showTips.Visible = false;
+            infoName.Visible = false;
+            infoAddress.Visible = false;
             string sqlStr = $"SELECT DISTINCT business_name, address, rating FROM Business WHERE zip = '{Zip.SelectedItem.ToString()}' AND business_id IN (SELECT business_id FROM businesscategory";
             foreach (String item in Categories.CheckedItems)
             {
@@ -151,26 +163,26 @@ namespace YelpApp_v1
 
         private void addInfo(NpgsqlDataReader reader)
         {
+            infoName.Text = reader.GetString(1);
+            infoAddress.Text = $"{reader.GetString(2)}, {reader.GetString(4)}, {reader.GetString(3)}";
             showTips.Visible = true;
             infoName.Visible = true;
             infoAddress.Visible = true;
-            infoName.Text = reader.GetString(1);
-            infoAddress.Text = $"{reader.GetString(2)}, {reader.GetString(4)}, {reader.GetString(3)}";
-        }
-
-        private void businessGrid_SelectionChanged(object sender, EventArgs e)
-        {
-            DataGridViewRow row = businessGrid.SelectedRows[0];
-            string name = row.Cells["name_col"].Value.ToString();
-            string address = row.Cells["address_col"].Value.ToString();
-            string sqlStr = $"SELECT * FROM Business WHERE business_name = '{name}' AND address = '{address}';";
-            executeQuery(sqlStr, addInfo);
         }
 
         private void showTips_Click(object sender, EventArgs e)
         {
             Form2 tips = new Form2(this);
             tips.Show();
+        }
+
+        private void businessGrid_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            DataGridViewRow row = businessGrid.SelectedRows[0];
+            string name = row.Cells["name_col"].Value.ToString();
+            string address = row.Cells["address_col"].Value.ToString();
+            string sqlStr = $"SELECT * FROM Business WHERE business_name = '{name}' AND address = '{address}';";
+            executeQuery(sqlStr, addInfo);
         }
     }
 }

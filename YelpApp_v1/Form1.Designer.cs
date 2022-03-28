@@ -127,7 +127,7 @@
             this.businessGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.businessGrid.Size = new System.Drawing.Size(480, 429);
             this.businessGrid.TabIndex = 6;
-            this.businessGrid.SelectionChanged += new System.EventHandler(this.businessGrid_SelectionChanged);
+            this.businessGrid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.businessGrid_CellClick);
             // 
             // name_col
             // 
