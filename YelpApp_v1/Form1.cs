@@ -85,6 +85,8 @@ namespace YelpApp_v1
         private void City_SelectedIndexChanged(object sender, EventArgs e)
         {
             Zip.Items.Clear();
+            Categories.Items.Clear();
+            businessGrid.Rows.Clear();
             if (State.SelectedIndex > -1)
             {
                 string sqlStr = $"SELECT distinct zip FROM business WHERE city = '{City.SelectedItem.ToString()}' ORDER BY zip;";
@@ -95,6 +97,9 @@ namespace YelpApp_v1
         private void State_SelectedIndexChanged(object sender, EventArgs e)
         {
             City.Items.Clear();
+            Zip.Items.Clear();
+            businessGrid.Rows.Clear();
+            Categories.Items.Clear();
             if (State.SelectedIndex > -1)
             {
                 string sqlStr = $"SELECT distinct city FROM business WHERE state = '{State.SelectedItem.ToString()}' ORDER BY city;";
@@ -114,10 +119,10 @@ namespace YelpApp_v1
 
         private void Zip_SelectedIndexChanged(object sender, EventArgs e)
         {
+            businessGrid.Rows.Clear();
+            Categories.Items.Clear();
             if (Zip.SelectedIndex > -1)
             {
-                businessGrid.Rows.Clear();
-                Categories.Items.Clear();
                 string sqlStr = $"SELECT DISTINCT cat_name FROM businessCategory INNER JOIN Business ON businesscategory.business_id = Business.Business_id WHERE Zip = '{Zip.SelectedItem.ToString()}' ORDER BY cat_name;";
                 executeQuery(sqlStr, addCheckRow);
                 sqlStr = $"SELECT business_name, address, rating FROM Business WHERE Zip = '{Zip.SelectedItem.ToString()}' ORDER BY business_name;";
@@ -142,6 +147,30 @@ namespace YelpApp_v1
             }
             sqlStr += ");";
             executeQuery(sqlStr, addBusinessRow);
+        }
+
+        private void addInfo(NpgsqlDataReader reader)
+        {
+            showTips.Visible = true;
+            infoName.Visible = true;
+            infoAddress.Visible = true;
+            infoName.Text = reader.GetString(1);
+            infoAddress.Text = $"{reader.GetString(2)}, {reader.GetString(4)}, {reader.GetString(3)}";
+        }
+
+        private void businessGrid_SelectionChanged(object sender, EventArgs e)
+        {
+            DataGridViewRow row = businessGrid.SelectedRows[0];
+            string name = row.Cells["name_col"].Value.ToString();
+            string address = row.Cells["address_col"].Value.ToString();
+            string sqlStr = $"SELECT * FROM Business WHERE business_name = '{name}' AND address = '{address}';";
+            executeQuery(sqlStr, addInfo);
+        }
+
+        private void showTips_Click(object sender, EventArgs e)
+        {
+            Form2 tips = new Form2(this);
+            tips.Show();
         }
     }
 }
