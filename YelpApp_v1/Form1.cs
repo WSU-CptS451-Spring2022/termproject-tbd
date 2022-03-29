@@ -32,7 +32,7 @@ namespace YelpApp_v1
             return "Host = localhost; Username = postgres; Database = yelpdb; password = password;";
         }
 
-        private void executeQuery(string sqlStr, Action<NpgsqlDataReader> myf)
+        public void executeQuery(string sqlStr, Action<NpgsqlDataReader> myf)
         {
             using (var connection = new NpgsqlConnection(buildConnectionString()))
             {
@@ -46,6 +46,32 @@ namespace YelpApp_v1
                         var reader = cmd.ExecuteReader();
                         while (reader.Read())
                             myf(reader);
+                    }
+                    catch (NpgsqlException ex)
+                    {
+                        Console.WriteLine(ex.Message.ToString());
+                        //System.Windows.MessageBox.Show(ex.Message.ToString());
+                    }
+                    finally
+                    {
+                        connection.Close();
+                    }
+                }
+            }
+        }
+
+        public void executeNonQuery(string sqlStr)
+        {
+            using (var connection = new NpgsqlConnection(buildConnectionString()))
+            {
+                connection.Open();
+                using (var cmd = new NpgsqlCommand())
+                {
+                    cmd.Connection = connection;
+                    cmd.CommandText = sqlStr;
+                    try
+                    {
+                        int affected = cmd.ExecuteNonQuery();
                     }
                     catch (NpgsqlException ex)
                     {
@@ -87,6 +113,7 @@ namespace YelpApp_v1
             showTips.Visible = false;
             infoName.Visible = false;
             infoAddress.Visible = false;
+            label5.Visible = true;
             Zip.Items.Clear();
             Categories.Items.Clear();
             businessGrid.Rows.Clear();
@@ -102,6 +129,7 @@ namespace YelpApp_v1
             showTips.Visible = false;
             infoName.Visible = false;
             infoAddress.Visible = false;
+            label5.Visible = true;
             City.Items.Clear();
             Zip.Items.Clear();
             businessGrid.Rows.Clear();
@@ -128,6 +156,7 @@ namespace YelpApp_v1
             showTips.Visible = false;
             infoName.Visible = false;
             infoAddress.Visible = false;
+            label5.Visible = true;
             businessGrid.Rows.Clear();
             Categories.Items.Clear();
             if (Zip.SelectedIndex > -1)
@@ -152,6 +181,7 @@ namespace YelpApp_v1
             showTips.Visible = false;
             infoName.Visible = false;
             infoAddress.Visible = false;
+            label5.Visible = true;
             string sqlStr = $"SELECT DISTINCT business_name, address, rating FROM Business WHERE zip = '{Zip.SelectedItem.ToString()}' AND business_id IN (SELECT business_id FROM businesscategory";
             foreach (String item in Categories.CheckedItems)
             {
@@ -165,6 +195,7 @@ namespace YelpApp_v1
         {
             infoName.Text = reader.GetString(1);
             infoAddress.Text = $"{reader.GetString(2)}, {reader.GetString(4)}, {reader.GetString(3)}";
+            label5.Visible = false;
             showTips.Visible = true;
             infoName.Visible = true;
             infoAddress.Visible = true;

@@ -45,6 +45,7 @@
             this.infoName = new System.Windows.Forms.Label();
             this.infoAddress = new System.Windows.Forms.Label();
             this.showTips = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.businessGrid)).BeginInit();
             this.SuspendLayout();
             // 
@@ -220,11 +221,21 @@
             this.showTips.Visible = false;
             this.showTips.Click += new System.EventHandler(this.showTips_Click);
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(9, 508);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(179, 13);
+            this.label5.TabIndex = 14;
+            this.label5.Text = "Click on a business to show the info!";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1164, 794);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.showTips);
             this.Controls.Add(this.infoAddress);
             this.Controls.Add(this.infoName);
@@ -266,6 +277,7 @@
         public System.Windows.Forms.DataGridViewTextBoxColumn rating_col;
         public System.Windows.Forms.Label infoAddress;
         public System.Windows.Forms.Button showTips;
+        public System.Windows.Forms.Label label5;
     }
 }
 
