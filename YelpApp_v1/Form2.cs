@@ -14,10 +14,12 @@ namespace YelpApp_v1
     public partial class Form2 : Form
     {
         string business_id;
+        Form1 main_set;
 
         public Form2(Form1 main)
         {
             InitializeComponent();
+            main_set = main;
             DataGridViewRow row = main.businessGrid.SelectedRows[0];
             string name = row.Cells["name_col"].Value.ToString();
             string address = row.Cells["address_col"].Value.ToString();
@@ -107,6 +109,7 @@ namespace YelpApp_v1
                 string sqlStr = $"INSERT INTO Tip(userid, business_id, tip_text, tip_date, num_of_likes) VALUES('PROFILE', '{business_id}', '{tip}', '{timestamp}', 0);";
                 executeNonQuery(sqlStr);
                 tipsGrid.Rows.Clear();
+                main_set.refresh_user(); 
                 sqlStr = $"SELECT tip_date, username, num_of_likes, tip_text FROM Tip INNER JOIN Users ON Users.userid = Tip.userid WHERE business_id = '{business_id}' ORDER BY tip_date desc;";
                 executeQuery(sqlStr, addTipsTable);
             }

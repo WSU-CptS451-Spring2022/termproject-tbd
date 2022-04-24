@@ -94,6 +94,20 @@ namespace YelpApp_v1
             }
         }
 
+        public void refresh_user()
+        {
+            dataGridView2.Rows.Clear();
+            dataGridView1.Rows.Clear();
+            string sql = $"SELECT username, avg_stars, fans_count, signed_up, funny, cool, useful, tip_count, like_count, latitude, longitude from users WHERE userid = '{userDataGrid.SelectedCells[0].Value.ToString()}';";
+            executeQuery(sql, addUserInfo);
+            tabPage1.Enabled = true;
+            editButton.Enabled = true;
+            updateButton.Enabled = false;
+            userLat.ReadOnly = true;
+            userLong.ReadOnly = true;
+            refreshButton.Enabled = true;
+        }
+
         private void addState(NpgsqlDataReader reader)
         {
             State.Items.Add(reader.GetString(0));
@@ -395,5 +409,6 @@ namespace YelpApp_v1
             userLong.ReadOnly = true;
             refreshButton.Enabled = true;
         }
+
     }
 }
