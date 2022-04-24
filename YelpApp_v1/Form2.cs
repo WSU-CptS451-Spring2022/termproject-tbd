@@ -29,6 +29,8 @@ namespace YelpApp_v1
             executeQuery(sqlStr, getBusinessId);
             sqlStr = $"SELECT tip_date, username, num_of_likes, tip_text FROM Tip INNER JOIN Users ON Users.userid = Tip.userid WHERE business_id = '{business_id}' ORDER BY tip_date desc;";
             executeQuery(sqlStr, addTipsTable);
+            sqlStr = $"SELECT DISTINCT friend_id FROM friends WHERE userid = '{main_set.userDataGrid.SelectedCells[0].Value.ToString()}';";
+            executeQuery(sqlStr, getFriendID);
         }
 
         private string buildConnectionString()
@@ -100,6 +102,17 @@ namespace YelpApp_v1
             tipsGrid.Rows.Add(reader.GetTimeStamp(0).ToString(), reader.GetString(1), reader.GetValue(2), reader.GetString(3));
         }
 
+        private void getFriendID(NpgsqlDataReader reader)
+        {
+            string sqlStr = $"SELECT username, tip_text, tip_date FROM tip INNER JOIN users ON tip.userid = users.userid INNER JOIN business ON tip.business_id = business.business_id WHERE tip.business_id = '{business_id}' AND tip.userid = '{reader.GetString(0)}' ORDER BY tip_date DESC;";
+            executeQuery(sqlStr, addFriendTip);
+        }
+
+        private void addFriendTip(NpgsqlDataReader reader)
+        {
+            dataGridView1.Rows.Add(reader.GetString(0), reader.GetDateTime(2), reader.GetString(1));
+        }
+
         private void addTip_Click(object sender, EventArgs e)
         {
             string tip = tipTextBox.Text;
@@ -114,6 +127,11 @@ namespace YelpApp_v1
                 executeQuery(sqlStr, addTipsTable);
             }
             tipTextBox.Clear();
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

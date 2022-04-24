@@ -720,7 +720,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(21, 12);
+            this.label6.Location = new System.Drawing.Point(22, 12);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(88, 13);
             this.label6.TabIndex = 2;
@@ -819,7 +819,7 @@
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TextBox userSearchBox;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.DataGridView userDataGrid;
+        public System.Windows.Forms.DataGridView userDataGrid;
         public System.Windows.Forms.DataGridViewTextBoxColumn userid;
         private System.Windows.Forms.Label label7;
         public System.Windows.Forms.DataGridView dataGridView1;

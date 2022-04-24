@@ -276,7 +276,11 @@ namespace YelpApp_v1
 
         private void tabControl1_Click(object sender, EventArgs e)
         {
-            if (!tabPage1.Enabled && tabControl1.SelectedTab==tabPage1) { MessageBox.Show("Please select a user.", "Error: User Not Selected", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+            if (!tabPage1.Enabled && tabControl1.SelectedTab==tabPage1) 
+            { 
+                MessageBox.Show("Please select a user.", "Error: User Not Selected", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                tabControl1.SelectedTab = tabPage2; 
+            }
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
