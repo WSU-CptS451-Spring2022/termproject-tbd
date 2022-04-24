@@ -35,9 +35,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.businessGrid = new System.Windows.Forms.DataGridView();
-            this.name_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.address_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.rating_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Categories = new System.Windows.Forms.CheckedListBox();
             this.label4 = new System.Windows.Forms.Label();
             this.Filter = new System.Windows.Forms.Button();
@@ -48,6 +45,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.refreshButton = new System.Windows.Forms.Button();
             this.userinfoFans = new System.Windows.Forms.TextBox();
             this.userinfoStars = new System.Windows.Forms.TextBox();
             this.userinfoUseful = new System.Windows.Forms.TextBox();
@@ -88,11 +86,18 @@
             this.Date = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label7 = new System.Windows.Forms.Label();
             this.userDataGrid = new System.Windows.Forms.DataGridView();
-            this.userid = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label6 = new System.Windows.Forms.Label();
             this.userSearchBox = new System.Windows.Forms.TextBox();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.refreshButton = new System.Windows.Forms.Button();
+            this.name_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.address_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.city_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.state_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.distance_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.rating_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tips_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.check_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.userid = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.businessGrid)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -172,39 +177,21 @@
             this.businessGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.name_col,
             this.address_col,
-            this.rating_col});
-            this.businessGrid.Location = new System.Drawing.Point(343, 24);
+            this.city_col,
+            this.state_col,
+            this.distance_col,
+            this.rating_col,
+            this.tips_col,
+            this.check_col});
+            this.businessGrid.Location = new System.Drawing.Point(330, 24);
             this.businessGrid.MultiSelect = false;
             this.businessGrid.Name = "businessGrid";
             this.businessGrid.ReadOnly = true;
             this.businessGrid.RowHeadersVisible = false;
             this.businessGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.businessGrid.Size = new System.Drawing.Size(480, 429);
+            this.businessGrid.Size = new System.Drawing.Size(569, 429);
             this.businessGrid.TabIndex = 6;
             this.businessGrid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.businessGrid_CellClick);
-            // 
-            // name_col
-            // 
-            this.name_col.FillWeight = 85F;
-            this.name_col.HeaderText = "Name";
-            this.name_col.MinimumWidth = 100;
-            this.name_col.Name = "name_col";
-            this.name_col.ReadOnly = true;
-            // 
-            // address_col
-            // 
-            this.address_col.HeaderText = "Address";
-            this.address_col.MinimumWidth = 100;
-            this.address_col.Name = "address_col";
-            this.address_col.ReadOnly = true;
-            // 
-            // rating_col
-            // 
-            this.rating_col.FillWeight = 35F;
-            this.rating_col.HeaderText = "Rating";
-            this.rating_col.MinimumWidth = 75;
-            this.rating_col.Name = "rating_col";
-            this.rating_col.ReadOnly = true;
             // 
             // Categories
             // 
@@ -338,6 +325,17 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "User Information";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // refreshButton
+            // 
+            this.refreshButton.Enabled = false;
+            this.refreshButton.Location = new System.Drawing.Point(430, 315);
+            this.refreshButton.Name = "refreshButton";
+            this.refreshButton.Size = new System.Drawing.Size(58, 23);
+            this.refreshButton.TabIndex = 37;
+            this.refreshButton.Text = "Refresh";
+            this.refreshButton.UseVisualStyleBackColor = true;
+            this.refreshButton.Click += new System.EventHandler(this.refreshButton_Click);
             // 
             // userinfoFans
             // 
@@ -702,20 +700,12 @@
             this.userDataGrid.MultiSelect = false;
             this.userDataGrid.Name = "userDataGrid";
             this.userDataGrid.RowHeadersVisible = false;
+            this.userDataGrid.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.userDataGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.userDataGrid.Size = new System.Drawing.Size(253, 249);
             this.userDataGrid.TabIndex = 3;
             this.userDataGrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.userDataGrid_CellContentClick);
             this.userDataGrid.SelectionChanged += new System.EventHandler(this.userDataGrid_SelectionChanged);
-            // 
-            // userid
-            // 
-            this.userid.FillWeight = 85F;
-            this.userid.HeaderText = "";
-            this.userid.MinimumWidth = 100;
-            this.userid.Name = "userid";
-            this.userid.ReadOnly = true;
-            this.userid.Width = 249;
             // 
             // label6
             // 
@@ -734,7 +724,10 @@
             this.userSearchBox.Size = new System.Drawing.Size(253, 20);
             this.userSearchBox.TabIndex = 1;
             this.userSearchBox.Text = "Enter User Name";
+            this.userSearchBox.Click += new System.EventHandler(this.userSearchBox_Click);
+            this.userSearchBox.TextChanged += new System.EventHandler(this.userSearchBox_TextChanged);
             this.userSearchBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.userSearchBox_KeyPress);
+            this.userSearchBox.Leave += new System.EventHandler(this.userSearchBox_Leave);
             // 
             // tabPage1
             // 
@@ -762,16 +755,70 @@
             this.tabPage1.Text = "Business Search";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // refreshButton
+            // name_col
             // 
-            this.refreshButton.Enabled = false;
-            this.refreshButton.Location = new System.Drawing.Point(430, 315);
-            this.refreshButton.Name = "refreshButton";
-            this.refreshButton.Size = new System.Drawing.Size(58, 23);
-            this.refreshButton.TabIndex = 37;
-            this.refreshButton.Text = "Refresh";
-            this.refreshButton.UseVisualStyleBackColor = true;
-            this.refreshButton.Click += new System.EventHandler(this.refreshButton_Click);
+            this.name_col.FillWeight = 85F;
+            this.name_col.HeaderText = "Name";
+            this.name_col.MinimumWidth = 85;
+            this.name_col.Name = "name_col";
+            this.name_col.ReadOnly = true;
+            // 
+            // address_col
+            // 
+            this.address_col.HeaderText = "Address";
+            this.address_col.MinimumWidth = 105;
+            this.address_col.Name = "address_col";
+            this.address_col.ReadOnly = true;
+            // 
+            // city_col
+            // 
+            this.city_col.HeaderText = "City";
+            this.city_col.Name = "city_col";
+            this.city_col.ReadOnly = true;
+            // 
+            // state_col
+            // 
+            this.state_col.HeaderText = "State";
+            this.state_col.Name = "state_col";
+            this.state_col.ReadOnly = true;
+            // 
+            // distance_col
+            // 
+            this.distance_col.HeaderText = "Distance (miles)";
+            this.distance_col.MinimumWidth = 55;
+            this.distance_col.Name = "distance_col";
+            this.distance_col.ReadOnly = true;
+            // 
+            // rating_col
+            // 
+            this.rating_col.FillWeight = 35F;
+            this.rating_col.HeaderText = "Stars";
+            this.rating_col.MinimumWidth = 55;
+            this.rating_col.Name = "rating_col";
+            this.rating_col.ReadOnly = true;
+            // 
+            // tips_col
+            // 
+            this.tips_col.HeaderText = "# of Tips";
+            this.tips_col.MinimumWidth = 45;
+            this.tips_col.Name = "tips_col";
+            this.tips_col.ReadOnly = true;
+            // 
+            // check_col
+            // 
+            this.check_col.HeaderText = "Check Ins";
+            this.check_col.MinimumWidth = 45;
+            this.check_col.Name = "check_col";
+            this.check_col.ReadOnly = true;
+            // 
+            // userid
+            // 
+            this.userid.FillWeight = 85F;
+            this.userid.HeaderText = "";
+            this.userid.MinimumWidth = 100;
+            this.userid.Name = "userid";
+            this.userid.ReadOnly = true;
+            this.userid.Width = 251;
             // 
             // Form1
             // 
@@ -808,9 +855,6 @@
         public System.Windows.Forms.Button Filter;
         public System.Windows.Forms.Label info_header;
         public System.Windows.Forms.Label infoName;
-        public System.Windows.Forms.DataGridViewTextBoxColumn name_col;
-        public System.Windows.Forms.DataGridViewTextBoxColumn address_col;
-        public System.Windows.Forms.DataGridViewTextBoxColumn rating_col;
         public System.Windows.Forms.Label infoAddress;
         public System.Windows.Forms.Button showTips;
         public System.Windows.Forms.Label label5;
@@ -820,7 +864,6 @@
         private System.Windows.Forms.TextBox userSearchBox;
         private System.Windows.Forms.Label label6;
         public System.Windows.Forms.DataGridView userDataGrid;
-        public System.Windows.Forms.DataGridViewTextBoxColumn userid;
         private System.Windows.Forms.Label label7;
         public System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Label label11;
@@ -861,6 +904,15 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn TipText;
         private System.Windows.Forms.DataGridViewTextBoxColumn Date;
         private System.Windows.Forms.Button refreshButton;
+        private System.Windows.Forms.DataGridViewTextBoxColumn name_col;
+        private System.Windows.Forms.DataGridViewTextBoxColumn address_col;
+        private System.Windows.Forms.DataGridViewTextBoxColumn city_col;
+        private System.Windows.Forms.DataGridViewTextBoxColumn state_col;
+        private System.Windows.Forms.DataGridViewTextBoxColumn distance_col;
+        private System.Windows.Forms.DataGridViewTextBoxColumn rating_col;
+        private System.Windows.Forms.DataGridViewTextBoxColumn tips_col;
+        private System.Windows.Forms.DataGridViewTextBoxColumn check_col;
+        private System.Windows.Forms.DataGridViewTextBoxColumn userid;
     }
 }
 
