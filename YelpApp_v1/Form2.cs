@@ -13,13 +13,11 @@ namespace YelpApp_v1
 {
     public partial class Form2 : Form
     {
-        Form1 main;
         string business_id;
 
         public Form2(Form1 main)
         {
             InitializeComponent();
-            main = main;
             DataGridViewRow row = main.businessGrid.SelectedRows[0];
             string name = row.Cells["name_col"].Value.ToString();
             string address = row.Cells["address_col"].Value.ToString();

@@ -229,19 +229,6 @@ namespace YelpApp_v1
             userDataGrid.Rows.Add(reader.GetString(0));
         }
 
-        private void userSearchBox_TextChanged(object sender, EventArgs e)
-        {
-            userDataGrid.Rows.Clear();
-
-            string text = "%";
-            text += userSearchBox.Text;
-            text += "%";
-            if (!userSearchBox.Text.Contains(' ')) {
-                string sqlStr = $"SELECT userid FROM Users WHERE username LIKE '{text}' ORDER BY userid;";
-                executeQuery(sqlStr, addUserRow);
-            }        
-        }
-
         private void label6_Click(object sender, EventArgs e)
         {
 
@@ -249,7 +236,164 @@ namespace YelpApp_v1
 
         private void userDataGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            
+        }
 
+        private void userSearchBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar==(char)Keys.Enter)
+            {
+                userDataGrid.Rows.Clear();
+
+                if (userSearchBox.Text.Length != 0)
+                {
+
+                    string text = "%";
+                    text = userSearchBox.Text;
+                    text += "%";
+                    if (!userSearchBox.Text.Contains(' '))
+                    {
+                        string sqlStr = $"SELECT userid FROM Users WHERE username LIKE '{text}' ORDER BY userid;";
+                        executeQuery(sqlStr, addUserRow);
+                    }
+                }
+            }
+        }
+
+        private void tabControl1_Click(object sender, EventArgs e)
+        {
+            if (!tabPage1.Enabled && tabControl1.SelectedTab==tabPage1) { MessageBox.Show("Please select a user.", "Error: User Not Selected", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void edit_Click(object sender, EventArgs e)
+        {
+            updateButton.Enabled = true;
+            userLat.ReadOnly = false;
+            userLong.ReadOnly = false;
+        }
+
+        private void updateButton_Click(object sender, EventArgs e)
+        {
+            double latitude;
+            double longitude;
+            bool success = Double.TryParse(userLat.Text, out latitude);
+            bool success2 = Double.TryParse(userLong.Text, out longitude);
+            if(!success || !success2)
+            {
+                MessageBox.Show("Issue parsing a coordinate. Please try again.", "Error: Double Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            string sql = $"UPDATE users SET latitude = '{latitude}', longitude = '{longitude}' WHERE userid = '{userDataGrid.SelectedCells[0].Value.ToString()}'";
+            executeNonQuery(sql);
+            userLat.ReadOnly = true;
+            userLong.ReadOnly = true;
+        }
+
+        private void addUserInfo(NpgsqlDataReader reader)
+        {
+            userinfoName.Text = reader.GetString(0);
+            userinfoStars.Text = reader.GetDouble(1).ToString();
+            userinfoFans.Text = reader.GetInt32(2).ToString();
+            userinfoDate.Text = reader.GetDate(3).ToString();
+            userinfoFunny.Text = reader.GetInt32(4).ToString();
+            userinfoCool.Text = reader.GetInt32(5).ToString();
+            userinfoUseful.Text = reader.GetInt32(6).ToString();
+            userinfoTipCount.Text = reader.GetInt32(7).ToString();
+            userinfoTipLikes.Text = reader.GetInt32(8).ToString();
+            userLat.Text = reader.GetDouble(9).ToString();
+            userLong.Text = reader.GetDouble(10).ToString();
+            string sqlStr = $"SELECT DISTINCT friend_id FROM friends WHERE userid = '{userDataGrid.SelectedCells[0].Value.ToString()}';";
+            executeQuery(sqlStr, getFriendID);
+        }
+
+        private void getFriendID(NpgsqlDataReader reader)
+        {
+            string sqlStr = $"SELECT username, avg_stars, signed_up FROM users WHERE userid = '{reader.GetString(0)}';";
+            executeQuery(sqlStr, addFriendInfo);
+            sqlStr = $"SELECT username, business_name, city, tip_text, tip_date FROM tip INNER JOIN users ON tip.userid = users.userid INNER JOIN business ON tip.business_id = business.business_id WHERE tip.userid = '{reader.GetString(0)}' ORDER BY tip_date DESC LIMIT 1;";
+            executeQuery(sqlStr, addFriendTip);
+        }
+
+        private void addFriendInfo(NpgsqlDataReader reader)
+        {
+            dataGridView2.Rows.Add(reader.GetString(0), reader.GetDouble(1).ToString(), reader.GetDateTime(2).ToString());
+        }
+
+        private void addFriendTip(NpgsqlDataReader reader)
+        {
+            dataGridView1.Rows.Add(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetDateTime(4));
+        }
+
+        private void userDataGrid_SelectionChanged(object sender, EventArgs e)
+        {
+            if (userDataGrid.SelectedRows.Count == 0)
+            {
+                dataGridView2.Rows.Clear();
+                dataGridView1.Rows.Clear();
+                tabPage1.Enabled = false;
+                editButton.Enabled = false;
+                updateButton.Enabled = false;
+                refreshButton.Enabled = false;
+                userinfoName.Text = null;
+                userinfoStars.Text = null;
+                userinfoFans.Text = null;
+                userinfoDate.Text = null;
+                userinfoFunny.Text = null;
+                userinfoCool.Text = null;
+                userinfoUseful.Text = null;
+                userinfoTipCount.Text = null;
+                userinfoTipLikes.Text = null;
+                userLat.Text = null;
+                userLong.Text = null;
+                return;
+            }
+            else if (userDataGrid.SelectedCells[0].Value == null)
+            {
+                dataGridView2.Rows.Clear();
+                dataGridView1.Rows.Clear();
+                tabPage1.Enabled = false;
+                editButton.Enabled = false;
+                updateButton.Enabled = false;
+                refreshButton.Enabled = false;
+                userinfoName.Text = null;
+                userinfoStars.Text = null;
+                userinfoFans.Text = null;
+                userinfoDate.Text = null;
+                userinfoFunny.Text = null;
+                userinfoCool.Text = null;
+                userinfoUseful.Text = null;
+                userinfoTipCount.Text = null;
+                userinfoTipLikes.Text = null;
+                userLat.Text = null;
+                userLong.Text = null;
+                return;
+            }
+            dataGridView2.Rows.Clear();
+            dataGridView1.Rows.Clear();
+            string sql = $"SELECT username, avg_stars, fans_count, signed_up, funny, cool, useful, tip_count, like_count, latitude, longitude from users WHERE userid = '{userDataGrid.SelectedCells[0].Value.ToString()}';";
+            executeQuery(sql, addUserInfo);
+            tabPage1.Enabled = true;
+            editButton.Enabled = true;
+            refreshButton.Enabled = true;
+        }
+
+        private void refreshButton_Click(object sender, EventArgs e)
+        {
+            dataGridView2.Rows.Clear();
+            dataGridView1.Rows.Clear();
+            string sql = $"SELECT username, avg_stars, fans_count, signed_up, funny, cool, useful, tip_count, like_count, latitude, longitude from users WHERE userid = '{userDataGrid.SelectedCells[0].Value.ToString()}';";
+            executeQuery(sql, addUserInfo);
+            tabPage1.Enabled = true;
+            editButton.Enabled = true;
+            updateButton.Enabled = false;
+            userLat.ReadOnly = true;
+            userLong.ReadOnly = true;
+            refreshButton.Enabled = true;
         }
     }
 }
