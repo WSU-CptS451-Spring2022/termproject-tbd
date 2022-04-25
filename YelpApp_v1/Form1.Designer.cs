@@ -35,6 +35,14 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.businessGrid = new System.Windows.Forms.DataGridView();
+            this.name_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.address_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.city_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.state_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.distance_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.rating_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tips_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.check_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Categories = new System.Windows.Forms.CheckedListBox();
             this.label4 = new System.Windows.Forms.Label();
             this.Filter = new System.Windows.Forms.Button();
@@ -86,18 +94,16 @@
             this.Date = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label7 = new System.Windows.Forms.Label();
             this.userDataGrid = new System.Windows.Forms.DataGridView();
+            this.userid = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label6 = new System.Windows.Forms.Label();
             this.userSearchBox = new System.Windows.Forms.TextBox();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.name_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.address_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.city_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.state_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.distance_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.rating_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tips_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.check_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.userid = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PriceFilter = new System.Windows.Forms.CheckedListBox();
+            this.AttributeFilter = new System.Windows.Forms.CheckedListBox();
+            this.MealFilter = new System.Windows.Forms.CheckedListBox();
+            this.label23 = new System.Windows.Forms.Label();
+            this.label24 = new System.Windows.Forms.Label();
+            this.label25 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.businessGrid)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -183,7 +189,8 @@
             this.rating_col,
             this.tips_col,
             this.check_col});
-            this.businessGrid.Location = new System.Drawing.Point(330, 24);
+            this.businessGrid.Location = new System.Drawing.Point(294, 24);
+            this.businessGrid.Margin = new System.Windows.Forms.Padding(25);
             this.businessGrid.MultiSelect = false;
             this.businessGrid.Name = "businessGrid";
             this.businessGrid.ReadOnly = true;
@@ -193,12 +200,69 @@
             this.businessGrid.TabIndex = 6;
             this.businessGrid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.businessGrid_CellClick);
             // 
+            // name_col
+            // 
+            this.name_col.FillWeight = 85F;
+            this.name_col.HeaderText = "Name";
+            this.name_col.MinimumWidth = 85;
+            this.name_col.Name = "name_col";
+            this.name_col.ReadOnly = true;
+            // 
+            // address_col
+            // 
+            this.address_col.HeaderText = "Address";
+            this.address_col.MinimumWidth = 105;
+            this.address_col.Name = "address_col";
+            this.address_col.ReadOnly = true;
+            // 
+            // city_col
+            // 
+            this.city_col.HeaderText = "City";
+            this.city_col.Name = "city_col";
+            this.city_col.ReadOnly = true;
+            // 
+            // state_col
+            // 
+            this.state_col.HeaderText = "State";
+            this.state_col.Name = "state_col";
+            this.state_col.ReadOnly = true;
+            // 
+            // distance_col
+            // 
+            this.distance_col.HeaderText = "Distance (miles)";
+            this.distance_col.MinimumWidth = 55;
+            this.distance_col.Name = "distance_col";
+            this.distance_col.ReadOnly = true;
+            // 
+            // rating_col
+            // 
+            this.rating_col.FillWeight = 35F;
+            this.rating_col.HeaderText = "Stars";
+            this.rating_col.MinimumWidth = 55;
+            this.rating_col.Name = "rating_col";
+            this.rating_col.ReadOnly = true;
+            // 
+            // tips_col
+            // 
+            this.tips_col.HeaderText = "# of Tips";
+            this.tips_col.MinimumWidth = 45;
+            this.tips_col.Name = "tips_col";
+            this.tips_col.ReadOnly = true;
+            // 
+            // check_col
+            // 
+            this.check_col.HeaderText = "Check Ins";
+            this.check_col.MinimumWidth = 45;
+            this.check_col.Name = "check_col";
+            this.check_col.ReadOnly = true;
+            // 
             // Categories
             // 
             this.Categories.FormattingEnabled = true;
             this.Categories.Location = new System.Drawing.Point(20, 102);
+            this.Categories.Margin = new System.Windows.Forms.Padding(15);
             this.Categories.Name = "Categories";
-            this.Categories.Size = new System.Drawing.Size(246, 319);
+            this.Categories.Size = new System.Drawing.Size(246, 349);
             this.Categories.TabIndex = 7;
             // 
             // label4
@@ -212,7 +276,8 @@
             // 
             // Filter
             // 
-            this.Filter.Location = new System.Drawing.Point(20, 427);
+            this.Filter.Location = new System.Drawing.Point(759, 462);
+            this.Filter.Margin = new System.Windows.Forms.Padding(15);
             this.Filter.Name = "Filter";
             this.Filter.Size = new System.Drawing.Size(104, 26);
             this.Filter.TabIndex = 9;
@@ -707,6 +772,15 @@
             this.userDataGrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.userDataGrid_CellContentClick);
             this.userDataGrid.SelectionChanged += new System.EventHandler(this.userDataGrid_SelectionChanged);
             // 
+            // userid
+            // 
+            this.userid.FillWeight = 85F;
+            this.userid.HeaderText = "";
+            this.userid.MinimumWidth = 100;
+            this.userid.Name = "userid";
+            this.userid.ReadOnly = true;
+            this.userid.Width = 251;
+            // 
             // label6
             // 
             this.label6.AutoSize = true;
@@ -731,6 +805,12 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.label25);
+            this.tabPage1.Controls.Add(this.label24);
+            this.tabPage1.Controls.Add(this.label23);
+            this.tabPage1.Controls.Add(this.MealFilter);
+            this.tabPage1.Controls.Add(this.AttributeFilter);
+            this.tabPage1.Controls.Add(this.PriceFilter);
             this.tabPage1.Controls.Add(this.Categories);
             this.tabPage1.Controls.Add(this.label5);
             this.tabPage1.Controls.Add(this.City);
@@ -755,70 +835,61 @@
             this.tabPage1.Text = "Business Search";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // name_col
+            // PriceFilter
             // 
-            this.name_col.FillWeight = 85F;
-            this.name_col.HeaderText = "Name";
-            this.name_col.MinimumWidth = 85;
-            this.name_col.Name = "name_col";
-            this.name_col.ReadOnly = true;
+            this.PriceFilter.ColumnWidth = 100;
+            this.PriceFilter.FormattingEnabled = true;
+            this.PriceFilter.Location = new System.Drawing.Point(891, 40);
+            this.PriceFilter.Margin = new System.Windows.Forms.Padding(15);
+            this.PriceFilter.MultiColumn = true;
+            this.PriceFilter.Name = "PriceFilter";
+            this.PriceFilter.Size = new System.Drawing.Size(223, 34);
+            this.PriceFilter.TabIndex = 15;
             // 
-            // address_col
+            // AttributeFilter
             // 
-            this.address_col.HeaderText = "Address";
-            this.address_col.MinimumWidth = 105;
-            this.address_col.Name = "address_col";
-            this.address_col.ReadOnly = true;
+            this.AttributeFilter.FormattingEnabled = true;
+            this.AttributeFilter.Location = new System.Drawing.Point(891, 102);
+            this.AttributeFilter.Margin = new System.Windows.Forms.Padding(15);
+            this.AttributeFilter.Name = "AttributeFilter";
+            this.AttributeFilter.Size = new System.Drawing.Size(223, 154);
+            this.AttributeFilter.TabIndex = 16;
             // 
-            // city_col
+            // MealFilter
             // 
-            this.city_col.HeaderText = "City";
-            this.city_col.Name = "city_col";
-            this.city_col.ReadOnly = true;
+            this.MealFilter.FormattingEnabled = true;
+            this.MealFilter.Location = new System.Drawing.Point(891, 286);
+            this.MealFilter.Margin = new System.Windows.Forms.Padding(15);
+            this.MealFilter.Name = "MealFilter";
+            this.MealFilter.Size = new System.Drawing.Size(223, 94);
+            this.MealFilter.TabIndex = 17;
             // 
-            // state_col
+            // label23
             // 
-            this.state_col.HeaderText = "State";
-            this.state_col.Name = "state_col";
-            this.state_col.ReadOnly = true;
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(891, 24);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(73, 13);
+            this.label23.TabIndex = 18;
+            this.label23.Text = "Filter by Price:";
             // 
-            // distance_col
+            // label24
             // 
-            this.distance_col.HeaderText = "Distance (miles)";
-            this.distance_col.MinimumWidth = 55;
-            this.distance_col.Name = "distance_col";
-            this.distance_col.ReadOnly = true;
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(891, 86);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(88, 13);
+            this.label24.TabIndex = 19;
+            this.label24.Text = "Filter by Attribute:";
             // 
-            // rating_col
+            // label25
             // 
-            this.rating_col.FillWeight = 35F;
-            this.rating_col.HeaderText = "Stars";
-            this.rating_col.MinimumWidth = 55;
-            this.rating_col.Name = "rating_col";
-            this.rating_col.ReadOnly = true;
-            // 
-            // tips_col
-            // 
-            this.tips_col.HeaderText = "# of Tips";
-            this.tips_col.MinimumWidth = 45;
-            this.tips_col.Name = "tips_col";
-            this.tips_col.ReadOnly = true;
-            // 
-            // check_col
-            // 
-            this.check_col.HeaderText = "Check Ins";
-            this.check_col.MinimumWidth = 45;
-            this.check_col.Name = "check_col";
-            this.check_col.ReadOnly = true;
-            // 
-            // userid
-            // 
-            this.userid.FillWeight = 85F;
-            this.userid.HeaderText = "";
-            this.userid.MinimumWidth = 100;
-            this.userid.Name = "userid";
-            this.userid.ReadOnly = true;
-            this.userid.Width = 251;
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(888, 271);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(72, 13);
+            this.label25.TabIndex = 20;
+            this.label25.Text = "Filter by Meal:";
             // 
             // Form1
             // 
@@ -913,6 +984,12 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn tips_col;
         private System.Windows.Forms.DataGridViewTextBoxColumn check_col;
         private System.Windows.Forms.DataGridViewTextBoxColumn userid;
+        public System.Windows.Forms.CheckedListBox PriceFilter;
+        public System.Windows.Forms.CheckedListBox AttributeFilter;
+        public System.Windows.Forms.CheckedListBox MealFilter;
+        public System.Windows.Forms.Label label24;
+        public System.Windows.Forms.Label label23;
+        public System.Windows.Forms.Label label25;
     }
 }
 
