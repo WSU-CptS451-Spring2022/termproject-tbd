@@ -15,11 +15,13 @@ namespace YelpApp_v1
     {
         public class Business
         {
-            public string bid { get; set; }
             public string name { get; set; }
             public string state { get; set; }
             public string city { get; set; }
+      
         }
+
+        public string bid { get; set; }
 
         public Form1()
         {
@@ -108,6 +110,13 @@ namespace YelpApp_v1
             refreshButton.Enabled = true;
         }
 
+        public void refresh_business()
+        {
+            businessGrid.Rows.Clear();
+            string sqlStr = $"SELECT business_name, address, city, state, rating, latitude, longitude, tip_count, checkins_count FROM Business WHERE Zip = '{Zip.SelectedItem.ToString()}' ORDER BY business_name;";
+            executeQuery(sqlStr, addBusinessRow);
+        }
+
         private void addState(NpgsqlDataReader reader)
         {
             State.Items.Add(reader.GetString(0));
@@ -132,7 +141,10 @@ namespace YelpApp_v1
 
         private void City_SelectedIndexChanged(object sender, EventArgs e)
         {
+            AttriCatView.Nodes[0].Nodes.Clear();
+            AttriCatView.Nodes[1].Nodes.Clear();
             showTips.Visible = false;
+            checkinsButton.Visible = false;
             infoName.Visible = false;
             infoAddress.Visible = false;
             label5.Visible = true;
@@ -148,7 +160,10 @@ namespace YelpApp_v1
 
         private void State_SelectedIndexChanged(object sender, EventArgs e)
         {
+            AttriCatView.Nodes[0].Nodes.Clear();
+            AttriCatView.Nodes[1].Nodes.Clear();
             showTips.Visible = false;
+            checkinsButton.Visible = false;
             infoName.Visible = false;
             infoAddress.Visible = false;
             label5.Visible = true;
@@ -176,7 +191,10 @@ namespace YelpApp_v1
 
         private void Zip_SelectedIndexChanged(object sender, EventArgs e)
         {
+            AttriCatView.Nodes[0].Nodes.Clear();
+            AttriCatView.Nodes[1].Nodes.Clear();
             showTips.Visible = false;
+            checkinsButton.Visible = false;
             infoName.Visible = false;
             infoAddress.Visible = false;
             label5.Visible = true;
@@ -202,6 +220,7 @@ namespace YelpApp_v1
             }
             businessGrid.Rows.Clear();
             showTips.Visible = false;
+            checkinsButton.Visible = false;
             infoName.Visible = false;
             infoAddress.Visible = false;
             label5.Visible = true;
@@ -216,10 +235,12 @@ namespace YelpApp_v1
 
         private void addInfo(NpgsqlDataReader reader)
         {
+            this.bid = reader.GetString(0); 
             infoName.Text = reader.GetString(1);
             infoAddress.Text = $"{reader.GetString(2)}, {reader.GetString(4)}, {reader.GetString(3)}";
             label5.Visible = false;
             showTips.Visible = true;
+            checkinsButton.Visible = true;
             infoName.Visible = true;
             infoAddress.Visible = true;
         }
@@ -479,9 +500,14 @@ namespace YelpApp_v1
             }
         }
 
-        private void AttriCatView_AfterSelect(object sender, TreeViewEventArgs e)
+        private void checkinsButton_Click(object sender, EventArgs e)
         {
-
+            if (this.bid == null)
+            {
+                return;
+            }
+            Form3 checkins = new Form3(this);
+            checkins.Show();
         }
     }
 }

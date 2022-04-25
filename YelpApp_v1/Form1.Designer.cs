@@ -100,6 +100,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.userSearchBox = new System.Windows.Forms.TextBox();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.checkinsButton = new System.Windows.Forms.Button();
             this.AttriCatView = new System.Windows.Forms.TreeView();
             this.pageSetupDialog1 = new System.Windows.Forms.PageSetupDialog();
             ((System.ComponentModel.ISupportInitialize)(this.businessGrid)).BeginInit();
@@ -800,6 +801,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.checkinsButton);
             this.tabPage1.Controls.Add(this.AttriCatView);
             this.tabPage1.Controls.Add(this.Categories);
             this.tabPage1.Controls.Add(this.label5);
@@ -825,6 +827,16 @@
             this.tabPage1.Text = "Business Search";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // checkinsButton
+            // 
+            this.checkinsButton.Location = new System.Drawing.Point(101, 612);
+            this.checkinsButton.Name = "checkinsButton";
+            this.checkinsButton.Size = new System.Drawing.Size(100, 23);
+            this.checkinsButton.TabIndex = 16;
+            this.checkinsButton.Text = "Show Checkins";
+            this.checkinsButton.UseVisualStyleBackColor = true;
+            this.checkinsButton.Click += new System.EventHandler(this.checkinsButton_Click);
+            // 
             // AttriCatView
             // 
             this.AttriCatView.Location = new System.Drawing.Point(970, 453);
@@ -839,7 +851,6 @@
             this.AttriCatView.ShowRootLines = false;
             this.AttriCatView.Size = new System.Drawing.Size(216, 196);
             this.AttriCatView.TabIndex = 15;
-            this.AttriCatView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.AttriCatView_AfterSelect);
             // 
             // Form1
             // 
@@ -936,6 +947,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn userid;
         private System.Windows.Forms.TreeView AttriCatView;
         private System.Windows.Forms.PageSetupDialog pageSetupDialog1;
+        private System.Windows.Forms.Button checkinsButton;
     }
 }
 

@@ -122,7 +122,8 @@ namespace YelpApp_v1
                 string sqlStr = $"INSERT INTO Tip(userid, business_id, tip_text, tip_date, num_of_likes) VALUES('PROFILE', '{business_id}', '{tip}', '{timestamp}', 0);";
                 executeNonQuery(sqlStr);
                 tipsGrid.Rows.Clear();
-                main_set.refresh_user(); 
+                main_set.refresh_user();
+                main_set.refresh_business();
                 sqlStr = $"SELECT tip_date, username, num_of_likes, tip_text FROM Tip INNER JOIN Users ON Users.userid = Tip.userid WHERE business_id = '{business_id}' ORDER BY tip_date desc;";
                 executeQuery(sqlStr, addTipsTable);
             }
