@@ -237,6 +237,30 @@ namespace YelpApp_v1
             string address = row.Cells["address_col"].Value.ToString();
             string sqlStr = $"SELECT * FROM Business WHERE business_name = '{name}' AND address = '{address}';";
             executeQuery(sqlStr, addInfo);
+            string sqlStr2 = $"SELECT DISTINCT att_name FROM BusinessAttribute, Business WHERE Business.business_name = '{name}' AND Business.address = '{address}' AND BusinessAttribute.business_id = Business.business_id;";
+            string sqlStr3 = $"SELECT DISTINCT cat_name FROM BusinessCategory, Business WHERE Business.business_name = '{name}' AND Business.address = '{address}' AND BusinessCategory.business_id = Business.business_id;";
+            AttriCatView.Nodes[0].Nodes.Clear();
+            AttriCatView.Nodes[1].Nodes.Clear();
+            executeQuery(sqlStr2, updateAttributes);
+            executeQuery(sqlStr3, updateCategories);
+        }
+
+        private void updateAttributes(NpgsqlDataReader reader)
+        {
+            AttriCatView.BeginUpdate();
+            TreeNode temp = new TreeNode(reader.GetString(0));
+            AttriCatView.Nodes[0].Nodes.Add(temp);
+            AttriCatView.ExpandAll();
+            AttriCatView.EndUpdate();
+        }
+
+        private void updateCategories(NpgsqlDataReader reader)
+        {
+            AttriCatView.BeginUpdate();
+            TreeNode temp = new TreeNode(reader.GetString(0));
+            AttriCatView.Nodes[1].Nodes.Add(temp);
+            AttriCatView.ExpandAll();
+            AttriCatView.EndUpdate();
         }
 
         private void addUserRow(NpgsqlDataReader reader)
@@ -453,6 +477,11 @@ namespace YelpApp_v1
                     executeQuery(sqlStr, addUserRow);
                 }
             }
+        }
+
+        private void AttriCatView_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+
         }
     }
 }

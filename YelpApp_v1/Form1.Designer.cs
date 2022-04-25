@@ -28,6 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Attributes");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Categories");
             this.City = new System.Windows.Forms.ComboBox();
             this.State = new System.Windows.Forms.ComboBox();
             this.Zip = new System.Windows.Forms.ComboBox();
@@ -35,6 +37,14 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.businessGrid = new System.Windows.Forms.DataGridView();
+            this.name_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.address_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.city_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.state_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.distance_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.rating_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tips_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.check_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Categories = new System.Windows.Forms.CheckedListBox();
             this.label4 = new System.Windows.Forms.Label();
             this.Filter = new System.Windows.Forms.Button();
@@ -86,18 +96,12 @@
             this.Date = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label7 = new System.Windows.Forms.Label();
             this.userDataGrid = new System.Windows.Forms.DataGridView();
+            this.userid = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label6 = new System.Windows.Forms.Label();
             this.userSearchBox = new System.Windows.Forms.TextBox();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.name_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.address_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.city_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.state_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.distance_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.rating_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tips_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.check_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.userid = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.AttriCatView = new System.Windows.Forms.TreeView();
+            this.pageSetupDialog1 = new System.Windows.Forms.PageSetupDialog();
             ((System.ComponentModel.ISupportInitialize)(this.businessGrid)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -193,6 +197,62 @@
             this.businessGrid.TabIndex = 6;
             this.businessGrid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.businessGrid_CellClick);
             // 
+            // name_col
+            // 
+            this.name_col.FillWeight = 85F;
+            this.name_col.HeaderText = "Name";
+            this.name_col.MinimumWidth = 85;
+            this.name_col.Name = "name_col";
+            this.name_col.ReadOnly = true;
+            // 
+            // address_col
+            // 
+            this.address_col.HeaderText = "Address";
+            this.address_col.MinimumWidth = 105;
+            this.address_col.Name = "address_col";
+            this.address_col.ReadOnly = true;
+            // 
+            // city_col
+            // 
+            this.city_col.HeaderText = "City";
+            this.city_col.Name = "city_col";
+            this.city_col.ReadOnly = true;
+            // 
+            // state_col
+            // 
+            this.state_col.HeaderText = "State";
+            this.state_col.Name = "state_col";
+            this.state_col.ReadOnly = true;
+            // 
+            // distance_col
+            // 
+            this.distance_col.HeaderText = "Distance (miles)";
+            this.distance_col.MinimumWidth = 55;
+            this.distance_col.Name = "distance_col";
+            this.distance_col.ReadOnly = true;
+            // 
+            // rating_col
+            // 
+            this.rating_col.FillWeight = 35F;
+            this.rating_col.HeaderText = "Stars";
+            this.rating_col.MinimumWidth = 55;
+            this.rating_col.Name = "rating_col";
+            this.rating_col.ReadOnly = true;
+            // 
+            // tips_col
+            // 
+            this.tips_col.HeaderText = "# of Tips";
+            this.tips_col.MinimumWidth = 45;
+            this.tips_col.Name = "tips_col";
+            this.tips_col.ReadOnly = true;
+            // 
+            // check_col
+            // 
+            this.check_col.HeaderText = "Check Ins";
+            this.check_col.MinimumWidth = 45;
+            this.check_col.Name = "check_col";
+            this.check_col.ReadOnly = true;
+            // 
             // Categories
             // 
             this.Categories.FormattingEnabled = true;
@@ -277,7 +337,7 @@
             this.tabControl1.Location = new System.Drawing.Point(12, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1140, 779);
+            this.tabControl1.Size = new System.Drawing.Size(1340, 779);
             this.tabControl1.TabIndex = 15;
             this.tabControl1.Click += new System.EventHandler(this.tabControl1_Click);
             // 
@@ -321,7 +381,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1132, 753);
+            this.tabPage2.Size = new System.Drawing.Size(1332, 753);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "User Information";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -707,6 +767,15 @@
             this.userDataGrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.userDataGrid_CellContentClick);
             this.userDataGrid.SelectionChanged += new System.EventHandler(this.userDataGrid_SelectionChanged);
             // 
+            // userid
+            // 
+            this.userid.FillWeight = 85F;
+            this.userid.HeaderText = "";
+            this.userid.MinimumWidth = 100;
+            this.userid.Name = "userid";
+            this.userid.ReadOnly = true;
+            this.userid.Width = 251;
+            // 
             // label6
             // 
             this.label6.AutoSize = true;
@@ -731,6 +800,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.AttriCatView);
             this.tabPage1.Controls.Add(this.Categories);
             this.tabPage1.Controls.Add(this.label5);
             this.tabPage1.Controls.Add(this.City);
@@ -750,81 +820,32 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1132, 753);
+            this.tabPage1.Size = new System.Drawing.Size(1332, 753);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Business Search";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // name_col
+            // AttriCatView
             // 
-            this.name_col.FillWeight = 85F;
-            this.name_col.HeaderText = "Name";
-            this.name_col.MinimumWidth = 85;
-            this.name_col.Name = "name_col";
-            this.name_col.ReadOnly = true;
-            // 
-            // address_col
-            // 
-            this.address_col.HeaderText = "Address";
-            this.address_col.MinimumWidth = 105;
-            this.address_col.Name = "address_col";
-            this.address_col.ReadOnly = true;
-            // 
-            // city_col
-            // 
-            this.city_col.HeaderText = "City";
-            this.city_col.Name = "city_col";
-            this.city_col.ReadOnly = true;
-            // 
-            // state_col
-            // 
-            this.state_col.HeaderText = "State";
-            this.state_col.Name = "state_col";
-            this.state_col.ReadOnly = true;
-            // 
-            // distance_col
-            // 
-            this.distance_col.HeaderText = "Distance (miles)";
-            this.distance_col.MinimumWidth = 55;
-            this.distance_col.Name = "distance_col";
-            this.distance_col.ReadOnly = true;
-            // 
-            // rating_col
-            // 
-            this.rating_col.FillWeight = 35F;
-            this.rating_col.HeaderText = "Stars";
-            this.rating_col.MinimumWidth = 55;
-            this.rating_col.Name = "rating_col";
-            this.rating_col.ReadOnly = true;
-            // 
-            // tips_col
-            // 
-            this.tips_col.HeaderText = "# of Tips";
-            this.tips_col.MinimumWidth = 45;
-            this.tips_col.Name = "tips_col";
-            this.tips_col.ReadOnly = true;
-            // 
-            // check_col
-            // 
-            this.check_col.HeaderText = "Check Ins";
-            this.check_col.MinimumWidth = 45;
-            this.check_col.Name = "check_col";
-            this.check_col.ReadOnly = true;
-            // 
-            // userid
-            // 
-            this.userid.FillWeight = 85F;
-            this.userid.HeaderText = "";
-            this.userid.MinimumWidth = 100;
-            this.userid.Name = "userid";
-            this.userid.ReadOnly = true;
-            this.userid.Width = 251;
+            this.AttriCatView.Location = new System.Drawing.Point(970, 453);
+            this.AttriCatView.Name = "AttriCatView";
+            treeNode1.Name = "Attributes";
+            treeNode1.Text = "Attributes";
+            treeNode2.Name = "Categories";
+            treeNode2.Text = "Categories";
+            this.AttriCatView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
+            treeNode1,
+            treeNode2});
+            this.AttriCatView.ShowRootLines = false;
+            this.AttriCatView.Size = new System.Drawing.Size(216, 196);
+            this.AttriCatView.TabIndex = 15;
+            this.AttriCatView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.AttriCatView_AfterSelect);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1164, 794);
+            this.ClientSize = new System.Drawing.Size(1433, 683);
             this.Controls.Add(this.tabControl1);
             this.Name = "Form1";
             this.Text = "YelpApp";
@@ -913,6 +934,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn tips_col;
         private System.Windows.Forms.DataGridViewTextBoxColumn check_col;
         private System.Windows.Forms.DataGridViewTextBoxColumn userid;
+        private System.Windows.Forms.TreeView AttriCatView;
+        private System.Windows.Forms.PageSetupDialog pageSetupDialog1;
     }
 }
 
