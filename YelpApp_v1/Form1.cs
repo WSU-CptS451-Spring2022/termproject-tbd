@@ -22,6 +22,8 @@ namespace YelpApp_v1
         }
 
         public string bid { get; set; }
+        public double user_latitude { get; set; }
+        public double user_longitude { get; set; }
 
         public Form1()
         {
@@ -113,7 +115,7 @@ namespace YelpApp_v1
         public void refresh_business()
         {
             businessGrid.Rows.Clear();
-            string sqlStr = $"SELECT business_name, address, city, state, rating, latitude, longitude, tip_count, checkins_count FROM Business WHERE Zip = '{Zip.SelectedItem.ToString()}' ORDER BY business_name;";
+            string sqlStr = $"SELECT business_name, address, city, state, getDistance({double.Parse(userLat.Text)}, {double.Parse(userLong.Text)}, latitude, longitude), rating, latitude, longitude, tip_count, checkins_count FROM Business WHERE Zip = '{Zip.SelectedItem.ToString()}' AND City = '{City.SelectedItem.ToString()}' ORDER BY business_name;";
             executeQuery(sqlStr, addBusinessRow);
         }
 
@@ -185,8 +187,8 @@ namespace YelpApp_v1
 
         private void addBusinessRow(NpgsqlDataReader reader)
         {
-            double distance = 0;
-            businessGrid.Rows.Add(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), distance, reader.GetDouble(4), reader.GetInt32(7), reader.GetInt32(8));
+            double distance = Math.Round(reader.GetDouble(4), 2);
+            businessGrid.Rows.Add(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), distance, reader.GetDouble(5), reader.GetInt32(8), reader.GetInt32(9));
         }
 
         private void Zip_SelectedIndexChanged(object sender, EventArgs e)
@@ -204,7 +206,7 @@ namespace YelpApp_v1
             {
                 string sqlStr = $"SELECT DISTINCT cat_name FROM businessCategory INNER JOIN Business ON businesscategory.business_id = Business.Business_id WHERE Zip = '{Zip.SelectedItem.ToString()}' ORDER BY cat_name;";
                 executeQuery(sqlStr, addCheckRow);
-                sqlStr = $"SELECT business_name, address, city, state, rating, latitude, longitude, tip_count, checkins_count FROM Business WHERE Zip = '{Zip.SelectedItem.ToString()}' ORDER BY business_name;";
+                sqlStr = $"SELECT business_name, address, city, state, getDistance({double.Parse(userLat.Text)}, {double.Parse(userLong.Text)}, latitude, longitude), rating, latitude, longitude, tip_count, checkins_count FROM Business WHERE Zip = '{Zip.SelectedItem.ToString()}' AND City = '{City.SelectedItem.ToString()}' ORDER BY business_name;";
                 executeQuery(sqlStr, addBusinessRow);
             }
         }
@@ -214,7 +216,7 @@ namespace YelpApp_v1
             if (Categories.CheckedItems.Count == 0)
             {
                 businessGrid.Rows.Clear();
-                string sqlStr1 = $"SELECT  business_name, address, city, state, rating, latitude, longitude, tip_count, checkins_count FROM Business WHERE Zip = '{Zip.SelectedItem.ToString()}' ORDER BY business_name;";
+                string sqlStr1 = $"SELECT business_name, address, city, state, getDistance({double.Parse(userLat.Text)}, {double.Parse(userLong.Text)}, latitude, longitude), rating, latitude, longitude, tip_count, checkins_count FROM Business WHERE Zip = '{Zip.SelectedItem.ToString()}' AND City = '{City.SelectedItem.ToString()}' ORDER BY business_name;";
                 executeQuery(sqlStr1, addBusinessRow);
                 return;
             }
@@ -224,7 +226,7 @@ namespace YelpApp_v1
             infoName.Visible = false;
             infoAddress.Visible = false;
             label5.Visible = true;
-            string sqlStr = $"SELECT DISTINCT  business_name, address, city, state, rating, latitude, longitude, tip_count, checkins_count FROM Business WHERE zip = '{Zip.SelectedItem.ToString()}' AND business_id IN (SELECT business_id FROM businesscategory";
+            string sqlStr = $"SELECT DISTINCT  business_name, address, city, state, getDistance({double.Parse(userLat.Text)}, {double.Parse(userLong.Text)}, latitude, longitude), rating, latitude, longitude, tip_count, checkins_count FROM Business WHERE zip = '{Zip.SelectedItem.ToString()}' AND City = '{City.SelectedItem.ToString()}' AND business_id IN (SELECT business_id FROM businesscategory";
             foreach (String item in Categories.CheckedItems)
             {
                     sqlStr += $" WHERE cat_name = '{item}' INTERSECT SELECT business_id FROM businesscategory";
@@ -311,11 +313,8 @@ namespace YelpApp_v1
                     string text = "%";
                     text = userSearchBox.Text;
                     text += "%";
-                    if (!userSearchBox.Text.Contains(' '))
-                    {
-                        string sqlStr = $"SELECT userid FROM Users WHERE username LIKE '{text}' ORDER BY userid;";
-                        executeQuery(sqlStr, addUserRow);
-                    }
+                    string sqlStr = $"SELECT userid FROM Users WHERE username LIKE '{text}' ORDER BY userid;";
+                    executeQuery(sqlStr, addUserRow);
                 }
             }
         }
@@ -492,11 +491,8 @@ namespace YelpApp_v1
                 string text = "%";
                 text = userSearchBox.Text;
                 text += "%";
-                if (!userSearchBox.Text.Contains(' '))
-                {
-                    string sqlStr = $"SELECT userid FROM Users WHERE username LIKE '{text}' ORDER BY userid;";
-                    executeQuery(sqlStr, addUserRow);
-                }
+                string sqlStr = $"SELECT userid FROM Users WHERE username LIKE '{text}' ORDER BY userid;";
+                executeQuery(sqlStr, addUserRow);
             }
         }
 
