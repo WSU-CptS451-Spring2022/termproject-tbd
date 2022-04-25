@@ -15,11 +15,15 @@ namespace YelpApp_v1
     {
         public class Business
         {
-            public string bid { get; set; }
             public string name { get; set; }
             public string state { get; set; }
             public string city { get; set; }
+      
         }
+
+        public string bid { get; set; }
+        public double user_latitude { get; set; }
+        public double user_longitude { get; set; }
 
         public Form1()
         {
@@ -111,6 +115,13 @@ namespace YelpApp_v1
             refreshButton.Enabled = true;
         }
 
+        public void refresh_business()
+        {
+            businessGrid.Rows.Clear();
+            string sqlStr = $"SELECT business_name, address, city, state, getDistance({double.Parse(userLat.Text)}, {double.Parse(userLong.Text)}, latitude, longitude), rating, latitude, longitude, tip_count, checkins_count FROM Business WHERE Zip = '{Zip.SelectedItem.ToString()}' AND City = '{City.SelectedItem.ToString()}' ORDER BY business_name;";
+            executeQuery(sqlStr, addBusinessRow);
+        }
+
         private void addState(NpgsqlDataReader reader)
         {
             State.Items.Add(reader.GetString(0));
@@ -135,7 +146,10 @@ namespace YelpApp_v1
 
         private void City_SelectedIndexChanged(object sender, EventArgs e)
         {
+            AttriCatView.Nodes[0].Nodes.Clear();
+            AttriCatView.Nodes[1].Nodes.Clear();
             showTips.Visible = false;
+            checkinsButton.Visible = false;
             infoName.Visible = false;
             infoAddress.Visible = false;
             label5.Visible = true;
@@ -151,7 +165,10 @@ namespace YelpApp_v1
 
         private void State_SelectedIndexChanged(object sender, EventArgs e)
         {
+            AttriCatView.Nodes[0].Nodes.Clear();
+            AttriCatView.Nodes[1].Nodes.Clear();
             showTips.Visible = false;
+            checkinsButton.Visible = false;
             infoName.Visible = false;
             infoAddress.Visible = false;
             label5.Visible = true;
@@ -173,13 +190,16 @@ namespace YelpApp_v1
 
         private void addBusinessRow(NpgsqlDataReader reader)
         {
-            double distance = 0;
-            businessGrid.Rows.Add(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), distance, reader.GetDouble(4), reader.GetInt32(7), reader.GetInt32(8));
+            double distance = Math.Round(reader.GetDouble(4), 2);
+            businessGrid.Rows.Add(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), distance, reader.GetDouble(5), reader.GetInt32(8), reader.GetInt32(9));
         }
 
         private void Zip_SelectedIndexChanged(object sender, EventArgs e)
         {
+            AttriCatView.Nodes[0].Nodes.Clear();
+            AttriCatView.Nodes[1].Nodes.Clear();
             showTips.Visible = false;
+            checkinsButton.Visible = false;
             infoName.Visible = false;
             infoAddress.Visible = false;
             label5.Visible = true;
@@ -189,7 +209,7 @@ namespace YelpApp_v1
             {
                 string sqlStr = $"SELECT DISTINCT cat_name FROM businessCategory INNER JOIN Business ON businesscategory.business_id = Business.Business_id WHERE Zip = '{Zip.SelectedItem.ToString()}' ORDER BY cat_name;";
                 executeQuery(sqlStr, addCheckRow);
-                sqlStr = $"SELECT business_name, address, city, state, rating, latitude, longitude, tip_count, checkins_count FROM Business WHERE Zip = '{Zip.SelectedItem.ToString()}' ORDER BY business_name;";
+                sqlStr = $"SELECT business_name, address, city, state, getDistance({double.Parse(userLat.Text)}, {double.Parse(userLong.Text)}, latitude, longitude), rating, latitude, longitude, tip_count, checkins_count FROM Business WHERE Zip = '{Zip.SelectedItem.ToString()}' AND City = '{City.SelectedItem.ToString()}' ORDER BY business_name;";
                 executeQuery(sqlStr, addBusinessRow);
             }
         }
@@ -199,6 +219,7 @@ namespace YelpApp_v1
             string sqlStr = $"SELECT DISTINCT business_name, address, city, state, rating, latitude, longitude, tip_count, checkins_count FROM Business WHERE Zip = '{Zip.SelectedItem.ToString()}' ";
             businessGrid.Rows.Clear();
             showTips.Visible = false;
+            checkinsButton.Visible = false;
             infoName.Visible = false;
             infoAddress.Visible = false;
             label5.Visible = true;
@@ -259,10 +280,12 @@ namespace YelpApp_v1
 
         private void addInfo(NpgsqlDataReader reader)
         {
+            this.bid = reader.GetString(0); 
             infoName.Text = reader.GetString(1);
             infoAddress.Text = $"{reader.GetString(2)}, {reader.GetString(4)}, {reader.GetString(3)}";
             label5.Visible = false;
             showTips.Visible = true;
+            checkinsButton.Visible = true;
             infoName.Visible = true;
             infoAddress.Visible = true;
         }
@@ -280,6 +303,30 @@ namespace YelpApp_v1
             string address = row.Cells["address_col"].Value.ToString();
             string sqlStr = $"SELECT * FROM Business WHERE business_name = '{name}' AND address = '{address}';";
             executeQuery(sqlStr, addInfo);
+            string sqlStr2 = $"SELECT DISTINCT att_name FROM BusinessAttribute, Business WHERE Business.business_name = '{name}' AND Business.address = '{address}' AND BusinessAttribute.business_id = Business.business_id;";
+            string sqlStr3 = $"SELECT DISTINCT cat_name FROM BusinessCategory, Business WHERE Business.business_name = '{name}' AND Business.address = '{address}' AND BusinessCategory.business_id = Business.business_id;";
+            AttriCatView.Nodes[0].Nodes.Clear();
+            AttriCatView.Nodes[1].Nodes.Clear();
+            executeQuery(sqlStr2, updateAttributes);
+            executeQuery(sqlStr3, updateCategories);
+        }
+
+        private void updateAttributes(NpgsqlDataReader reader)
+        {
+            AttriCatView.BeginUpdate();
+            TreeNode temp = new TreeNode(reader.GetString(0));
+            AttriCatView.Nodes[0].Nodes.Add(temp);
+            AttriCatView.ExpandAll();
+            AttriCatView.EndUpdate();
+        }
+
+        private void updateCategories(NpgsqlDataReader reader)
+        {
+            AttriCatView.BeginUpdate();
+            TreeNode temp = new TreeNode(reader.GetString(0));
+            AttriCatView.Nodes[1].Nodes.Add(temp);
+            AttriCatView.ExpandAll();
+            AttriCatView.EndUpdate();
         }
 
         private void addUserRow(NpgsqlDataReader reader)
@@ -309,11 +356,8 @@ namespace YelpApp_v1
                     string text = "%";
                     text = userSearchBox.Text;
                     text += "%";
-                    if (!userSearchBox.Text.Contains(' '))
-                    {
-                        string sqlStr = $"SELECT userid FROM Users WHERE username LIKE '{text}' ORDER BY userid;";
-                        executeQuery(sqlStr, addUserRow);
-                    }
+                    string sqlStr = $"SELECT userid FROM Users WHERE username LIKE '{text}' ORDER BY userid;";
+                    executeQuery(sqlStr, addUserRow);
                 }
             }
         }
@@ -490,6 +534,19 @@ namespace YelpApp_v1
                 string text = "%";
                 text = userSearchBox.Text;
                 text += "%";
+                string sqlStr = $"SELECT userid FROM Users WHERE username LIKE '{text}' ORDER BY userid;";
+                executeQuery(sqlStr, addUserRow);
+            }
+        }
+
+        private void checkinsButton_Click(object sender, EventArgs e)
+        {
+            if (this.bid == null)
+            {
+                return;
+            }
+            Form3 checkins = new Form3(this);
+            checkins.Show();
                 if (!userSearchBox.Text.Contains(' '))
                 {
                     string sqlStr = $"SELECT userid FROM Users WHERE username LIKE '{text}' ORDER BY userid;";

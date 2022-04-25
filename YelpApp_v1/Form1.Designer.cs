@@ -28,6 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Attributes");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Categories");
             this.City = new System.Windows.Forms.ComboBox();
             this.State = new System.Windows.Forms.ComboBox();
             this.Zip = new System.Windows.Forms.ComboBox();
@@ -104,6 +106,9 @@
             this.label23 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
             this.label25 = new System.Windows.Forms.Label();
+            this.checkinsButton = new System.Windows.Forms.Button();
+            this.AttriCatView = new System.Windows.Forms.TreeView();
+            this.pageSetupDialog1 = new System.Windows.Forms.PageSetupDialog();
             ((System.ComponentModel.ISupportInitialize)(this.businessGrid)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -342,7 +347,7 @@
             this.tabControl1.Location = new System.Drawing.Point(12, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1140, 779);
+            this.tabControl1.Size = new System.Drawing.Size(1340, 779);
             this.tabControl1.TabIndex = 15;
             this.tabControl1.Click += new System.EventHandler(this.tabControl1_Click);
             // 
@@ -386,7 +391,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1132, 753);
+            this.tabPage2.Size = new System.Drawing.Size(1332, 753);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "User Information";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -811,6 +816,8 @@
             this.tabPage1.Controls.Add(this.MealFilter);
             this.tabPage1.Controls.Add(this.AttributeFilter);
             this.tabPage1.Controls.Add(this.PriceFilter);
+            this.tabPage1.Controls.Add(this.checkinsButton);
+            this.tabPage1.Controls.Add(this.AttriCatView);
             this.tabPage1.Controls.Add(this.Categories);
             this.tabPage1.Controls.Add(this.label5);
             this.tabPage1.Controls.Add(this.City);
@@ -830,12 +837,35 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1132, 753);
+            this.tabPage1.Size = new System.Drawing.Size(1332, 753);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Business Search";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // PriceFilter
+            // checkinsButton
+            // 
+            this.checkinsButton.Location = new System.Drawing.Point(101, 612);
+            this.checkinsButton.Name = "checkinsButton";
+            this.checkinsButton.Size = new System.Drawing.Size(100, 23);
+            this.checkinsButton.TabIndex = 16;
+            this.checkinsButton.Text = "Show Checkins";
+            this.checkinsButton.UseVisualStyleBackColor = true;
+            this.checkinsButton.Click += new System.EventHandler(this.checkinsButton_Click);
+            // 
+            // AttriCatView
+            // 
+            this.AttriCatView.Location = new System.Drawing.Point(970, 453);
+            this.AttriCatView.Name = "AttriCatView";
+            treeNode1.Name = "Attributes";
+            treeNode1.Text = "Attributes";
+            treeNode2.Name = "Categories";
+            treeNode2.Text = "Categories";
+            this.AttriCatView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
+            treeNode1,
+            treeNode2});
+            this.AttriCatView.ShowRootLines = false;
+            this.AttriCatView.Size = new System.Drawing.Size(216, 196);
+            this.AttriCatView.TabIndex = 15;
             // 
             this.PriceFilter.ColumnWidth = 100;
             this.PriceFilter.FormattingEnabled = true;
@@ -895,7 +925,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1164, 794);
+            this.ClientSize = new System.Drawing.Size(1433, 683);
             this.Controls.Add(this.tabControl1);
             this.Name = "Form1";
             this.Text = "YelpApp";
@@ -990,6 +1020,9 @@
         public System.Windows.Forms.Label label24;
         public System.Windows.Forms.Label label23;
         public System.Windows.Forms.Label label25;
+        private System.Windows.Forms.TreeView AttriCatView;
+        private System.Windows.Forms.PageSetupDialog pageSetupDialog1;
+        private System.Windows.Forms.Button checkinsButton;
     }
 }
 
