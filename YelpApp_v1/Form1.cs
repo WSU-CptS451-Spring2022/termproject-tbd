@@ -24,12 +24,15 @@ namespace YelpApp_v1
         public Form1()
         {
             InitializeComponent();
+            init_Categories();
+            init_Attributes();
+            init_Meals();
             addState();
         }
 
         private string buildConnectionString()
         {
-            return "Host = localhost; Username = postgres; Database = yelpdb; password = password;";
+            return "Host = localhost; Username = postgres; Database = yelpdb; password = Password123;";
         }
 
         public void executeQuery(string sqlStr, Action<NpgsqlDataReader> myf)
@@ -141,7 +144,7 @@ namespace YelpApp_v1
             }
         }
 
-        private void addCheckRow(NpgsqlDataReader reader)
+        private void addCategoryRow(NpgsqlDataReader reader)
         {
             Categories.Items.Add(reader.GetString(0), CheckState.Unchecked);
         }
@@ -150,7 +153,7 @@ namespace YelpApp_v1
         {
             businessGrid.Rows.Add(reader.GetString(0), reader.GetString(1), reader.GetDouble(2));
         }
-
+        
         private void Zip_SelectedIndexChanged(object sender, EventArgs e)
         {
             showTips.Visible = false;
@@ -162,7 +165,7 @@ namespace YelpApp_v1
             if (Zip.SelectedIndex > -1)
             {
                 string sqlStr = $"SELECT DISTINCT cat_name FROM businessCategory INNER JOIN Business ON businesscategory.business_id = Business.Business_id WHERE Zip = '{Zip.SelectedItem.ToString()}' ORDER BY cat_name;";
-                executeQuery(sqlStr, addCheckRow);
+                executeQuery(sqlStr, addCategoryRow);
                 sqlStr = $"SELECT business_name, address, rating FROM Business WHERE Zip = '{Zip.SelectedItem.ToString()}' ORDER BY business_name;";
                 executeQuery(sqlStr, addBusinessRow);
             }
@@ -170,24 +173,62 @@ namespace YelpApp_v1
 
         private void Filter_Click(object sender, EventArgs e)
         {
-            if (Categories.CheckedItems.Count == 0)
-            {
-                businessGrid.Rows.Clear();
-                string sqlStr1 = $"SELECT business_name, address, rating FROM Business WHERE Zip = '{Zip.SelectedItem.ToString()}' ORDER BY business_name;";
-                executeQuery(sqlStr1, addBusinessRow);
-                return;
-            }
+            string sqlStr = $"SELECT business_name, address, rating FROM Business WHERE Zip = '{Zip.SelectedItem.ToString()}' ";
             businessGrid.Rows.Clear();
             showTips.Visible = false;
             infoName.Visible = false;
             infoAddress.Visible = false;
             label5.Visible = true;
-            string sqlStr = $"SELECT DISTINCT business_name, address, rating FROM Business WHERE zip = '{Zip.SelectedItem.ToString()}' AND business_id IN (SELECT business_id FROM businesscategory";
-            foreach (String item in Categories.CheckedItems)
+
+            if (Categories.CheckedItems.Count > 0)
             {
+                sqlStr += $" AND business_id IN (SELECT business_id FROM businesscategory";
+                foreach (String item in Categories.CheckedItems)
+                {
                     sqlStr += $" WHERE cat_name = '{item}' INTERSECT SELECT business_id FROM businesscategory";
+                }
+                sqlStr += ")";
             }
-            sqlStr += ");";
+
+            if (PriceFilter.CheckedItems.Count > 0)
+            {
+                sqlStr += "AND business_id IN(SELECT business_id FROM businessattribute";
+                foreach (String item in PriceFilter.CheckedItems)
+                {
+                    sqlStr += $" WHERE att_name = 'RestaurantsPriceRange2' AND businessattribute.value = 'True' INTERSECT SELECT business_id FROM businesscategory";
+                }
+                sqlStr += ")";
+            }
+
+            //need to make lookup table
+            string[] att_Lookup = { "BusinessAcceptsCreditCards", "RestaurantsReservations", "WheelchairAccessible", "OutdoorSeating", "GoodForKids", "GoodForGroups", "RestaurantsDelivery", "RestaurantsTakeOut", "WiFi", "BikeParking" };
+            if (AttributeFilter.CheckedItems.Count > 0)
+            {
+                sqlStr += "AND business_id IN(SELECT business_id FROM businessattribute";
+                foreach (String item in AttributeFilter.CheckedItems)
+                {
+                    //Wi-Fi needs special case since the attribute value is 'free'
+                    if(item.Equals("Free Wi-Fi"))
+                    {
+                        sqlStr += $" WHERE att_name = '{att_Lookup[AttributeFilter.Items.IndexOf(item)]}' AND businessattribute.value = 'free' INTERSECT SELECT business_id FROM businesscategory";
+                    }
+                    else
+                        sqlStr += $" WHERE att_name = '{att_Lookup[AttributeFilter.Items.IndexOf(item)]}' AND businessattribute.value = 'True' INTERSECT SELECT business_id FROM businesscategory";
+                }
+                sqlStr += ")";
+            }
+
+            if (MealFilter.CheckedItems.Count > 0)
+            {
+                sqlStr += "AND business_id IN(SELECT business_id FROM businessattribute";
+                foreach (String item in MealFilter.CheckedItems)
+                {
+                    sqlStr += $" WHERE att_name = '{item}' AND businessattribute.value = 'True' INTERSECT SELECT business_id FROM businesscategory";
+                }
+                sqlStr += ")";
+            }
+
+            sqlStr += " ORDER BY business_name;";
             executeQuery(sqlStr, addBusinessRow);
         }
 
@@ -214,6 +255,63 @@ namespace YelpApp_v1
             string address = row.Cells["address_col"].Value.ToString();
             string sqlStr = $"SELECT * FROM Business WHERE business_name = '{name}' AND address = '{address}';";
             executeQuery(sqlStr, addInfo);
+        }
+
+        private void init_Categories()
+        {
+            PriceFilter.Items.Add("$", CheckState.Unchecked);
+            PriceFilter.Items.Add("$$", CheckState.Unchecked);
+            PriceFilter.Items.Add("$$$", CheckState.Unchecked);
+            PriceFilter.Items.Add("$$$$", CheckState.Unchecked);
+        }
+
+        private void init_Attributes()
+        {
+            AttributeFilter.Items.Add("Accepts Credit Cards", CheckState.Unchecked);
+            AttributeFilter.Items.Add("Takes Reservations", CheckState.Unchecked);
+            AttributeFilter.Items.Add("Wheelchair Accessable", CheckState.Unchecked);
+            AttributeFilter.Items.Add("Outdoor Seating", CheckState.Unchecked);
+            AttributeFilter.Items.Add("Good For Kids", CheckState.Unchecked);
+            AttributeFilter.Items.Add("Good For Groups", CheckState.Unchecked);
+            AttributeFilter.Items.Add("Delivery", CheckState.Unchecked);
+            AttributeFilter.Items.Add("Take Out", CheckState.Unchecked);
+            AttributeFilter.Items.Add("Free Wi-Fi", CheckState.Unchecked);
+            AttributeFilter.Items.Add("Bike Parking", CheckState.Unchecked);
+        }
+
+        private void init_Meals()
+        {
+            MealFilter.Items.Add("Breakfast", CheckState.Unchecked);
+            MealFilter.Items.Add("Lunch", CheckState.Unchecked);
+            MealFilter.Items.Add("Brunch", CheckState.Unchecked);
+            MealFilter.Items.Add("Dinner", CheckState.Unchecked);
+            MealFilter.Items.Add("Dessert", CheckState.Unchecked);
+            MealFilter.Items.Add("Late Night", CheckState.Unchecked);
+        }
+
+        //deprecated this function, it only runs on UNCHECK :|
+        private void PriceFilter_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            /*
+            if (PriceFilter.CheckedItems.Count == 0)
+            {
+                businessGrid.Rows.Clear();
+                string sqlStr1 = $"SELECT business_name, address, rating FROM Business WHERE Zip = '{Zip.SelectedItem.ToString()}' ORDER BY business_name;";
+                executeQuery(sqlStr1, addBusinessRow);
+                return;
+            }
+            businessGrid.Rows.Clear();
+            showTips.Visible = false;
+            infoName.Visible = false;
+            infoAddress.Visible = false;
+            string sqlStr = $"SELECT DISTINCT business_name, address, rating FROM Business WHERE zip = '{Zip.SelectedItem.ToString()}' AND business_id IN (SELECT business_id FROM businessattribute";
+            foreach (String item in PriceFilter.CheckedItems)
+            {
+                sqlStr += $" WHERE att_name = 'RestaurantsPriceRange2' AND businessattribute.value = '{item.Length}'";
+            }
+            sqlStr += ");";
+            executeQuery(sqlStr, addBusinessRow);
+            */
         }
     }
 }
