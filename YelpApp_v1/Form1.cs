@@ -45,7 +45,7 @@ namespace YelpApp_v1
 
         private string buildConnectionString()
         {
-            return "Host = localhost; Username = postgres; Database = yelpdb; password = Password123;";
+            return "Host = localhost; Username = postgres; Database = yelpdb; password = password;";
         }
 
         public void executeQuery(string sqlStr, Action<NpgsqlDataReader> myf)
@@ -286,7 +286,7 @@ namespace YelpApp_v1
             infoName.Text = reader.GetString(1);
             infoAddress.Text = $"{reader.GetString(2)}, {reader.GetString(4)}, {reader.GetString(3)}";
 
-            string sqlStr1 = $"SELECT * FROM Business WHERE business_name = 'times WHERE business_id = '{bid}' AND week_day = '{DateTime.Today.DayOfWeek}';";
+            string sqlStr1 = $"SELECT open_time, close_time FROM Business, Times WHERE business.business_id = '{bid}' AND week_day = '{DateTimeOffset.Now.DayOfWeek}' AND Times.business_id = Business.business_id;";
             executeQuery(sqlStr1, addHoursInfo);
             
             label5.Visible = false;
@@ -299,7 +299,8 @@ namespace YelpApp_v1
 
         private void addHoursInfo(NpgsqlDataReader reader)
         {
-            infoHours.Text = $"Today({DateTime.Today.DayOfWeek}) Closes: {reader.GetString(2)}, Opens: {reader.GetString(3)}";
+
+            infoHours.Text = $"Opens: {reader.GetTimeSpan(0).ToString()}\nCloses: {reader.GetTimeSpan(1).ToString()}";
         }
 
         private void showTips_Click(object sender, EventArgs e)
