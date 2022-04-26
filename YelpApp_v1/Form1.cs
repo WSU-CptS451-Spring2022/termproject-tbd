@@ -31,6 +31,7 @@ namespace YelpApp_v1
             init_Prices();
             init_Attributes();
             init_Meals();
+            init_Sort_By();
             addState();
             userSearchBox.Click += TextBoxOnClick;
         }
@@ -118,7 +119,8 @@ namespace YelpApp_v1
         public void refresh_business()
         {
             businessGrid.Rows.Clear();
-            string sqlStr = $"SELECT business_name, address, city, state, getDistance({double.Parse(userLat.Text)}, {double.Parse(userLong.Text)}, latitude, longitude), rating, latitude, longitude, tip_count, checkins_count FROM Business WHERE Zip = '{Zip.SelectedItem.ToString()}' AND City = '{City.SelectedItem.ToString()}' ORDER BY business_name;";
+            string sqlStr = $"SELECT business_name, address, city, state, getDistance({double.Parse(userLat.Text)}, {double.Parse(userLong.Text)}, latitude, longitude), rating, latitude, longitude, tip_count, checkins_count FROM Business WHERE Zip = '{Zip.SelectedItem.ToString()}' AND City = '{City.SelectedItem.ToString()}'";
+            sqlStr += get_sort_string();
             executeQuery(sqlStr, addBusinessRow);
         }
 
@@ -209,14 +211,15 @@ namespace YelpApp_v1
             {
                 string sqlStr = $"SELECT DISTINCT cat_name FROM businessCategory INNER JOIN Business ON businesscategory.business_id = Business.Business_id WHERE Zip = '{Zip.SelectedItem.ToString()}' ORDER BY cat_name;";
                 executeQuery(sqlStr, addCheckRow);
-                sqlStr = $"SELECT business_name, address, city, state, getDistance({double.Parse(userLat.Text)}, {double.Parse(userLong.Text)}, latitude, longitude), rating, latitude, longitude, tip_count, checkins_count FROM Business WHERE Zip = '{Zip.SelectedItem.ToString()}' AND City = '{City.SelectedItem.ToString()}' ORDER BY business_name;";
+                sqlStr = $"SELECT business_name, address, city, state, getDistance({double.Parse(userLat.Text)}, {double.Parse(userLong.Text)}, latitude, longitude), rating, latitude, longitude, tip_count, checkins_count FROM Business WHERE Zip = '{Zip.SelectedItem.ToString()}' AND City = '{City.SelectedItem.ToString()}'";
+                sqlStr += get_sort_string();
                 executeQuery(sqlStr, addBusinessRow);
             }
         }
 
         private void Filter_Click(object sender, EventArgs e)
         {
-            string sqlStr = $"SELECT DISTINCT business_name, address, city, state, rating, latitude, longitude, tip_count, checkins_count FROM Business WHERE Zip = '{Zip.SelectedItem.ToString()}' ";
+            string sqlStr = $"SELECT DISTINCT business_name, address, city, state, getDistance({double.Parse(userLat.Text)}, {double.Parse(userLong.Text)}, latitude, longitude), rating, latitude, longitude, tip_count, checkins_count FROM Business WHERE Zip = '{Zip.SelectedItem.ToString()}' AND City = '{City.SelectedItem.ToString()}' ";
             businessGrid.Rows.Clear();
             showTips.Visible = false;
             checkinsButton.Visible = false;
@@ -273,8 +276,7 @@ namespace YelpApp_v1
                 }
                 sqlStr += ")";
             }
-
-            sqlStr += " ORDER BY business_name;";
+            sqlStr += get_sort_string();
             executeQuery(sqlStr, addBusinessRow);
         }
 
@@ -283,11 +285,21 @@ namespace YelpApp_v1
             this.bid = reader.GetString(0); 
             infoName.Text = reader.GetString(1);
             infoAddress.Text = $"{reader.GetString(2)}, {reader.GetString(4)}, {reader.GetString(3)}";
+
+            string sqlStr1 = $"SELECT * FROM Business WHERE business_name = 'times WHERE business_id = '{bid}' AND week_day = '{DateTime.Today.DayOfWeek}';";
+            executeQuery(sqlStr1, addHoursInfo);
+            
             label5.Visible = false;
             showTips.Visible = true;
             checkinsButton.Visible = true;
             infoName.Visible = true;
             infoAddress.Visible = true;
+            infoHours.Visible = true;
+        }
+
+        private void addHoursInfo(NpgsqlDataReader reader)
+        {
+            infoHours.Text = $"Today({DateTime.Today.DayOfWeek}) Closes: {reader.GetString(2)}, Opens: {reader.GetString(3)}";
         }
 
         private void showTips_Click(object sender, EventArgs e)
@@ -301,6 +313,7 @@ namespace YelpApp_v1
             DataGridViewRow row = businessGrid.SelectedRows[0];
             string name = row.Cells["name_col"].Value.ToString();
             string address = row.Cells["address_col"].Value.ToString();
+
             string sqlStr = $"SELECT * FROM Business WHERE business_name = '{name}' AND address = '{address}';";
             executeQuery(sqlStr, addInfo);
             string sqlStr2 = $"SELECT DISTINCT att_name FROM BusinessAttribute, Business WHERE Business.business_name = '{name}' AND Business.address = '{address}' AND BusinessAttribute.business_id = Business.business_id;";
@@ -549,12 +562,11 @@ namespace YelpApp_v1
             checkins.Show();
                 if (!userSearchBox.Text.Contains(' '))
                 {
-                    string sqlStr = $"SELECT userid FROM Users WHERE username LIKE '{text}' ORDER BY userid;";
+                    string sqlStr = $"SELECT userid FROM Users WHERE username LIKE '{userSearchBox.Text}' ORDER BY userid;";
                     executeQuery(sqlStr, addUserRow);
                 }
             }
-        }
-
+        
         private void init_Prices()
         {
             PriceFilter.Items.Add("$", CheckState.Unchecked);
@@ -585,6 +597,25 @@ namespace YelpApp_v1
             MealFilter.Items.Add("Dinner", CheckState.Unchecked);
             MealFilter.Items.Add("Dessert", CheckState.Unchecked);
             MealFilter.Items.Add("Late Night", CheckState.Unchecked);
+        }
+
+        private void init_Sort_By()
+        {
+            SortBy.Items.Add("Name (default)");
+            SortBy.Items.Add("Highest Rating (stars)");
+            SortBy.Items.Add("Most Tips");
+            SortBy.Items.Add("Most Check-Ins");
+            SortBy.Items.Add("Nearest");
+        }
+
+        private string get_sort_string()
+        {
+            if (SortBy.SelectedIndex == -1)         //nothing selected
+                return " ORDER BY business_name;";
+
+            string output = " ORDER BY ";
+            string[] sort_lookup = { "business_name;", "rating DESC;", "tip_count DESC;", "checkins_count DESC;", $"getDistance({double.Parse(userLat.Text)}, {double.Parse(userLong.Text)}, latitude, longitude);" };
+            return output += sort_lookup[SortBy.SelectedIndex];
         }
     }
 }

@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Attributes");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Categories");
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Attributes");
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Categories");
             this.City = new System.Windows.Forms.ComboBox();
             this.State = new System.Windows.Forms.ComboBox();
             this.Zip = new System.Windows.Forms.ComboBox();
@@ -100,15 +100,18 @@
             this.label6 = new System.Windows.Forms.Label();
             this.userSearchBox = new System.Windows.Forms.TextBox();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.PriceFilter = new System.Windows.Forms.CheckedListBox();
-            this.AttributeFilter = new System.Windows.Forms.CheckedListBox();
-            this.MealFilter = new System.Windows.Forms.CheckedListBox();
-            this.label23 = new System.Windows.Forms.Label();
-            this.label24 = new System.Windows.Forms.Label();
             this.label25 = new System.Windows.Forms.Label();
+            this.label24 = new System.Windows.Forms.Label();
+            this.label23 = new System.Windows.Forms.Label();
+            this.MealFilter = new System.Windows.Forms.CheckedListBox();
+            this.AttributeFilter = new System.Windows.Forms.CheckedListBox();
+            this.PriceFilter = new System.Windows.Forms.CheckedListBox();
             this.checkinsButton = new System.Windows.Forms.Button();
             this.AttriCatView = new System.Windows.Forms.TreeView();
             this.pageSetupDialog1 = new System.Windows.Forms.PageSetupDialog();
+            this.SortBy = new System.Windows.Forms.ComboBox();
+            this.label26 = new System.Windows.Forms.Label();
+            this.infoHours = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.businessGrid)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -123,9 +126,10 @@
             this.City.AccessibleName = "";
             this.City.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.City.FormattingEnabled = true;
-            this.City.Location = new System.Drawing.Point(80, 40);
+            this.City.Location = new System.Drawing.Point(147, 74);
+            this.City.Margin = new System.Windows.Forms.Padding(6);
             this.City.Name = "City";
-            this.City.Size = new System.Drawing.Size(99, 21);
+            this.City.Size = new System.Drawing.Size(178, 32);
             this.City.TabIndex = 0;
             this.City.SelectedIndexChanged += new System.EventHandler(this.City_SelectedIndexChanged);
             // 
@@ -134,9 +138,10 @@
             this.State.AccessibleName = "";
             this.State.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.State.FormattingEnabled = true;
-            this.State.Location = new System.Drawing.Point(20, 40);
+            this.State.Location = new System.Drawing.Point(37, 74);
+            this.State.Margin = new System.Windows.Forms.Padding(6);
             this.State.Name = "State";
-            this.State.Size = new System.Drawing.Size(54, 21);
+            this.State.Size = new System.Drawing.Size(96, 32);
             this.State.TabIndex = 1;
             this.State.SelectedIndexChanged += new System.EventHandler(this.State_SelectedIndexChanged);
             this.State.SelectionChangeCommitted += new System.EventHandler(this.State_SelectedIndexChanged);
@@ -146,36 +151,40 @@
             this.Zip.AccessibleName = "";
             this.Zip.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.Zip.FormattingEnabled = true;
-            this.Zip.Location = new System.Drawing.Point(185, 40);
+            this.Zip.Location = new System.Drawing.Point(339, 74);
+            this.Zip.Margin = new System.Windows.Forms.Padding(6);
             this.Zip.Name = "Zip";
-            this.Zip.Size = new System.Drawing.Size(81, 21);
+            this.Zip.Size = new System.Drawing.Size(145, 32);
             this.Zip.TabIndex = 2;
             this.Zip.SelectedIndexChanged += new System.EventHandler(this.Zip_SelectedIndexChanged);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(29, 24);
+            this.label1.Location = new System.Drawing.Point(53, 44);
+            this.label1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(32, 13);
+            this.label1.Size = new System.Drawing.Size(58, 25);
             this.label1.TabIndex = 3;
             this.label1.Text = "State";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(118, 24);
+            this.label2.Location = new System.Drawing.Point(216, 44);
+            this.label2.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(24, 13);
+            this.label2.Size = new System.Drawing.Size(46, 25);
             this.label2.TabIndex = 4;
             this.label2.Text = "City";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(201, 24);
+            this.label3.Location = new System.Drawing.Point(368, 44);
+            this.label3.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(50, 13);
+            this.label3.Size = new System.Drawing.Size(92, 25);
             this.label3.TabIndex = 5;
             this.label3.Text = "Zip Code";
             // 
@@ -183,6 +192,8 @@
             // 
             this.businessGrid.AllowUserToAddRows = false;
             this.businessGrid.AllowUserToDeleteRows = false;
+            this.businessGrid.AllowUserToResizeColumns = false;
+            this.businessGrid.AllowUserToResizeRows = false;
             this.businessGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.businessGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.businessGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -194,14 +205,15 @@
             this.rating_col,
             this.tips_col,
             this.check_col});
-            this.businessGrid.Location = new System.Drawing.Point(294, 24);
-            this.businessGrid.Margin = new System.Windows.Forms.Padding(25);
+            this.businessGrid.Location = new System.Drawing.Point(539, 44);
+            this.businessGrid.Margin = new System.Windows.Forms.Padding(46);
             this.businessGrid.MultiSelect = false;
             this.businessGrid.Name = "businessGrid";
             this.businessGrid.ReadOnly = true;
             this.businessGrid.RowHeadersVisible = false;
+            this.businessGrid.RowHeadersWidth = 72;
             this.businessGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.businessGrid.Size = new System.Drawing.Size(569, 429);
+            this.businessGrid.Size = new System.Drawing.Size(1043, 798);
             this.businessGrid.TabIndex = 6;
             this.businessGrid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.businessGrid_CellClick);
             // 
@@ -223,12 +235,14 @@
             // city_col
             // 
             this.city_col.HeaderText = "City";
+            this.city_col.MinimumWidth = 9;
             this.city_col.Name = "city_col";
             this.city_col.ReadOnly = true;
             // 
             // state_col
             // 
             this.state_col.HeaderText = "State";
+            this.state_col.MinimumWidth = 9;
             this.state_col.Name = "state_col";
             this.state_col.ReadOnly = true;
             // 
@@ -264,27 +278,28 @@
             // Categories
             // 
             this.Categories.FormattingEnabled = true;
-            this.Categories.Location = new System.Drawing.Point(20, 102);
-            this.Categories.Margin = new System.Windows.Forms.Padding(15);
+            this.Categories.Location = new System.Drawing.Point(37, 188);
+            this.Categories.Margin = new System.Windows.Forms.Padding(28);
             this.Categories.Name = "Categories";
-            this.Categories.Size = new System.Drawing.Size(246, 349);
+            this.Categories.Size = new System.Drawing.Size(448, 654);
             this.Categories.TabIndex = 7;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(105, 86);
+            this.label4.Location = new System.Drawing.Point(192, 159);
+            this.label4.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(57, 13);
+            this.label4.Size = new System.Drawing.Size(107, 25);
             this.label4.TabIndex = 8;
             this.label4.Text = "Categories";
             // 
             // Filter
             // 
-            this.Filter.Location = new System.Drawing.Point(759, 462);
-            this.Filter.Margin = new System.Windows.Forms.Padding(15);
+            this.Filter.Location = new System.Drawing.Point(1382, 863);
+            this.Filter.Margin = new System.Windows.Forms.Padding(28);
             this.Filter.Name = "Filter";
-            this.Filter.Size = new System.Drawing.Size(104, 26);
+            this.Filter.Size = new System.Drawing.Size(200, 50);
             this.Filter.TabIndex = 9;
             this.Filter.Text = "Filter";
             this.Filter.UseVisualStyleBackColor = true;
@@ -294,18 +309,20 @@
             // 
             this.info_header.AutoSize = true;
             this.info_header.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.info_header.Location = new System.Drawing.Point(16, 525);
+            this.info_header.Location = new System.Drawing.Point(533, 881);
+            this.info_header.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.info_header.Name = "info_header";
-            this.info_header.Size = new System.Drawing.Size(106, 20);
+            this.info_header.Size = new System.Drawing.Size(184, 32);
             this.info_header.TabIndex = 10;
             this.info_header.Text = "Business Info";
             // 
             // infoName
             // 
             this.infoName.AutoSize = true;
-            this.infoName.Location = new System.Drawing.Point(17, 556);
+            this.infoName.Location = new System.Drawing.Point(534, 925);
+            this.infoName.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.infoName.Name = "infoName";
-            this.infoName.Size = new System.Drawing.Size(33, 13);
+            this.infoName.Size = new System.Drawing.Size(61, 25);
             this.infoName.TabIndex = 11;
             this.infoName.Text = "name";
             this.infoName.Visible = false;
@@ -313,18 +330,20 @@
             // infoAddress
             // 
             this.infoAddress.AutoSize = true;
-            this.infoAddress.Location = new System.Drawing.Point(17, 583);
+            this.infoAddress.Location = new System.Drawing.Point(534, 960);
+            this.infoAddress.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.infoAddress.Name = "infoAddress";
-            this.infoAddress.Size = new System.Drawing.Size(44, 13);
+            this.infoAddress.Size = new System.Drawing.Size(85, 25);
             this.infoAddress.TabIndex = 12;
-            this.infoAddress.Text = "address";
+            this.infoAddress.Text = "Address";
             this.infoAddress.Visible = false;
             // 
             // showTips
             // 
-            this.showTips.Location = new System.Drawing.Point(20, 612);
+            this.showTips.Location = new System.Drawing.Point(1412, 925);
+            this.showTips.Margin = new System.Windows.Forms.Padding(6);
             this.showTips.Name = "showTips";
-            this.showTips.Size = new System.Drawing.Size(75, 23);
+            this.showTips.Size = new System.Drawing.Size(170, 40);
             this.showTips.TabIndex = 13;
             this.showTips.Text = "Show Tips";
             this.showTips.UseVisualStyleBackColor = true;
@@ -334,9 +353,10 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(17, 556);
+            this.label5.Location = new System.Drawing.Point(534, 925);
+            this.label5.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(179, 13);
+            this.label5.Size = new System.Drawing.Size(327, 25);
             this.label5.TabIndex = 14;
             this.label5.Text = "Click on a business to show the info!";
             // 
@@ -344,10 +364,11 @@
             // 
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Location = new System.Drawing.Point(12, 12);
+            this.tabControl1.Location = new System.Drawing.Point(22, 22);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(6);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1340, 779);
+            this.tabControl1.Size = new System.Drawing.Size(2457, 1438);
             this.tabControl1.TabIndex = 15;
             this.tabControl1.Click += new System.EventHandler(this.tabControl1_Click);
             // 
@@ -388,10 +409,11 @@
             this.tabPage2.Controls.Add(this.userDataGrid);
             this.tabPage2.Controls.Add(this.label6);
             this.tabPage2.Controls.Add(this.userSearchBox);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Location = new System.Drawing.Point(4, 33);
+            this.tabPage2.Margin = new System.Windows.Forms.Padding(6);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1332, 753);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(6);
+            this.tabPage2.Size = new System.Drawing.Size(2449, 1401);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "User Information";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -399,9 +421,10 @@
             // refreshButton
             // 
             this.refreshButton.Enabled = false;
-            this.refreshButton.Location = new System.Drawing.Point(430, 315);
+            this.refreshButton.Location = new System.Drawing.Point(788, 582);
+            this.refreshButton.Margin = new System.Windows.Forms.Padding(6);
             this.refreshButton.Name = "refreshButton";
-            this.refreshButton.Size = new System.Drawing.Size(58, 23);
+            this.refreshButton.Size = new System.Drawing.Size(106, 42);
             this.refreshButton.TabIndex = 37;
             this.refreshButton.Text = "Refresh";
             this.refreshButton.UseVisualStyleBackColor = true;
@@ -409,98 +432,110 @@
             // 
             // userinfoFans
             // 
-            this.userinfoFans.Location = new System.Drawing.Point(430, 72);
+            this.userinfoFans.Location = new System.Drawing.Point(788, 133);
+            this.userinfoFans.Margin = new System.Windows.Forms.Padding(6);
             this.userinfoFans.Name = "userinfoFans";
             this.userinfoFans.ReadOnly = true;
-            this.userinfoFans.Size = new System.Drawing.Size(53, 20);
+            this.userinfoFans.Size = new System.Drawing.Size(94, 29);
             this.userinfoFans.TabIndex = 36;
             // 
             // userinfoStars
             // 
-            this.userinfoStars.Location = new System.Drawing.Point(331, 72);
+            this.userinfoStars.Location = new System.Drawing.Point(607, 133);
+            this.userinfoStars.Margin = new System.Windows.Forms.Padding(6);
             this.userinfoStars.Name = "userinfoStars";
             this.userinfoStars.ReadOnly = true;
-            this.userinfoStars.Size = new System.Drawing.Size(53, 20);
+            this.userinfoStars.Size = new System.Drawing.Size(94, 29);
             this.userinfoStars.TabIndex = 35;
             // 
             // userinfoUseful
             // 
-            this.userinfoUseful.Location = new System.Drawing.Point(443, 156);
+            this.userinfoUseful.Location = new System.Drawing.Point(812, 288);
+            this.userinfoUseful.Margin = new System.Windows.Forms.Padding(6);
             this.userinfoUseful.Name = "userinfoUseful";
             this.userinfoUseful.ReadOnly = true;
-            this.userinfoUseful.Size = new System.Drawing.Size(40, 20);
+            this.userinfoUseful.Size = new System.Drawing.Size(70, 29);
             this.userinfoUseful.TabIndex = 34;
             // 
             // userinfoCool
             // 
-            this.userinfoCool.Location = new System.Drawing.Point(396, 156);
+            this.userinfoCool.Location = new System.Drawing.Point(726, 288);
+            this.userinfoCool.Margin = new System.Windows.Forms.Padding(6);
             this.userinfoCool.Name = "userinfoCool";
             this.userinfoCool.ReadOnly = true;
-            this.userinfoCool.Size = new System.Drawing.Size(40, 20);
+            this.userinfoCool.Size = new System.Drawing.Size(70, 29);
             this.userinfoCool.TabIndex = 33;
             // 
             // userinfoFunny
             // 
-            this.userinfoFunny.Location = new System.Drawing.Point(351, 156);
+            this.userinfoFunny.Location = new System.Drawing.Point(644, 288);
+            this.userinfoFunny.Margin = new System.Windows.Forms.Padding(6);
             this.userinfoFunny.Name = "userinfoFunny";
             this.userinfoFunny.ReadOnly = true;
-            this.userinfoFunny.Size = new System.Drawing.Size(40, 20);
+            this.userinfoFunny.Size = new System.Drawing.Size(70, 29);
             this.userinfoFunny.TabIndex = 32;
             // 
             // userinfoDate
             // 
-            this.userinfoDate.Location = new System.Drawing.Point(378, 107);
+            this.userinfoDate.Location = new System.Drawing.Point(693, 198);
+            this.userinfoDate.Margin = new System.Windows.Forms.Padding(6);
             this.userinfoDate.Name = "userinfoDate";
             this.userinfoDate.ReadOnly = true;
-            this.userinfoDate.Size = new System.Drawing.Size(105, 20);
+            this.userinfoDate.Size = new System.Drawing.Size(189, 29);
             this.userinfoDate.TabIndex = 31;
             // 
             // userinfoName
             // 
-            this.userinfoName.Location = new System.Drawing.Point(336, 32);
+            this.userinfoName.Location = new System.Drawing.Point(616, 59);
+            this.userinfoName.Margin = new System.Windows.Forms.Padding(6);
             this.userinfoName.Name = "userinfoName";
             this.userinfoName.ReadOnly = true;
-            this.userinfoName.Size = new System.Drawing.Size(147, 20);
+            this.userinfoName.Size = new System.Drawing.Size(266, 29);
             this.userinfoName.TabIndex = 30;
             // 
             // userinfoTipCount
             // 
-            this.userinfoTipCount.Location = new System.Drawing.Point(378, 183);
+            this.userinfoTipCount.Location = new System.Drawing.Point(693, 338);
+            this.userinfoTipCount.Margin = new System.Windows.Forms.Padding(6);
             this.userinfoTipCount.Name = "userinfoTipCount";
             this.userinfoTipCount.ReadOnly = true;
-            this.userinfoTipCount.Size = new System.Drawing.Size(109, 20);
+            this.userinfoTipCount.Size = new System.Drawing.Size(196, 29);
             this.userinfoTipCount.TabIndex = 29;
             // 
             // userinfoTipLikes
             // 
-            this.userinfoTipLikes.Location = new System.Drawing.Point(379, 217);
+            this.userinfoTipLikes.Location = new System.Drawing.Point(695, 401);
+            this.userinfoTipLikes.Margin = new System.Windows.Forms.Padding(6);
             this.userinfoTipLikes.Name = "userinfoTipLikes";
             this.userinfoTipLikes.ReadOnly = true;
-            this.userinfoTipLikes.Size = new System.Drawing.Size(109, 20);
+            this.userinfoTipLikes.Size = new System.Drawing.Size(196, 29);
             this.userinfoTipLikes.TabIndex = 28;
             // 
             // userLat
             // 
-            this.userLat.Location = new System.Drawing.Point(323, 263);
+            this.userLat.Location = new System.Drawing.Point(592, 486);
+            this.userLat.Margin = new System.Windows.Forms.Padding(6);
             this.userLat.Name = "userLat";
             this.userLat.ReadOnly = true;
-            this.userLat.Size = new System.Drawing.Size(100, 20);
+            this.userLat.Size = new System.Drawing.Size(180, 29);
             this.userLat.TabIndex = 27;
             // 
             // userLong
             // 
-            this.userLong.Location = new System.Drawing.Point(323, 287);
+            this.userLong.Location = new System.Drawing.Point(592, 530);
+            this.userLong.Margin = new System.Windows.Forms.Padding(6);
             this.userLong.Name = "userLong";
             this.userLong.ReadOnly = true;
-            this.userLong.Size = new System.Drawing.Size(100, 20);
+            this.userLong.Size = new System.Drawing.Size(180, 29);
             this.userLong.TabIndex = 26;
             // 
             // updateButton
             // 
             this.updateButton.Enabled = false;
-            this.updateButton.Location = new System.Drawing.Point(430, 287);
+            this.updateButton.Location = new System.Drawing.Point(788, 530);
+            this.updateButton.Margin = new System.Windows.Forms.Padding(6);
             this.updateButton.Name = "updateButton";
-            this.updateButton.Size = new System.Drawing.Size(58, 23);
+            this.updateButton.Size = new System.Drawing.Size(106, 42);
             this.updateButton.TabIndex = 25;
             this.updateButton.Text = "Update";
             this.updateButton.UseVisualStyleBackColor = true;
@@ -509,9 +544,10 @@
             // editButton
             // 
             this.editButton.Enabled = false;
-            this.editButton.Location = new System.Drawing.Point(430, 261);
+            this.editButton.Location = new System.Drawing.Point(788, 482);
+            this.editButton.Margin = new System.Windows.Forms.Padding(6);
             this.editButton.Name = "editButton";
-            this.editButton.Size = new System.Drawing.Size(58, 23);
+            this.editButton.Size = new System.Drawing.Size(106, 42);
             this.editButton.TabIndex = 24;
             this.editButton.Text = "Edit";
             this.editButton.UseVisualStyleBackColor = true;
@@ -520,117 +556,130 @@
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(292, 290);
+            this.label22.Location = new System.Drawing.Point(535, 535);
+            this.label22.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(27, 13);
+            this.label22.Size = new System.Drawing.Size(49, 25);
             this.label22.TabIndex = 23;
             this.label22.Text = "long";
             // 
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(292, 266);
+            this.label21.Location = new System.Drawing.Point(535, 491);
+            this.label21.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(18, 13);
+            this.label21.Size = new System.Drawing.Size(32, 25);
             this.label21.TabIndex = 22;
             this.label21.Text = "lat";
             // 
             // label20
             // 
             this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(292, 247);
+            this.label20.Location = new System.Drawing.Point(535, 456);
+            this.label20.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(51, 13);
+            this.label20.Size = new System.Drawing.Size(92, 25);
             this.label20.TabIndex = 21;
             this.label20.Text = "Location:";
             // 
             // label19
             // 
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(292, 219);
+            this.label19.Location = new System.Drawing.Point(535, 404);
+            this.label19.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(80, 13);
+            this.label19.Size = new System.Drawing.Size(146, 25);
             this.label19.TabIndex = 20;
             this.label19.Text = "Total Tip Likes:";
             // 
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(292, 183);
+            this.label18.Location = new System.Drawing.Point(535, 338);
+            this.label18.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(56, 13);
+            this.label18.Size = new System.Drawing.Size(104, 25);
             this.label18.TabIndex = 19;
             this.label18.Text = "Tip Count:";
             // 
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(440, 140);
+            this.label17.Location = new System.Drawing.Point(807, 258);
+            this.label17.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(38, 13);
+            this.label17.Size = new System.Drawing.Size(70, 25);
             this.label17.TabIndex = 18;
             this.label17.Text = "useful:";
             // 
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(292, 140);
+            this.label16.Location = new System.Drawing.Point(535, 258);
+            this.label16.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(37, 13);
+            this.label16.Size = new System.Drawing.Size(69, 25);
             this.label16.TabIndex = 17;
             this.label16.Text = "Votes:";
             // 
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(348, 140);
+            this.label15.Location = new System.Drawing.Point(638, 258);
+            this.label15.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(36, 13);
+            this.label15.Size = new System.Drawing.Size(66, 25);
             this.label15.TabIndex = 16;
             this.label15.Text = "funny:";
             // 
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(393, 141);
+            this.label14.Location = new System.Drawing.Point(720, 260);
+            this.label14.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(30, 13);
+            this.label14.Size = new System.Drawing.Size(54, 25);
             this.label14.TabIndex = 15;
             this.label14.Text = "cool:";
             // 
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(292, 107);
+            this.label13.Location = new System.Drawing.Point(535, 198);
+            this.label13.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(75, 13);
+            this.label13.Size = new System.Drawing.Size(138, 25);
             this.label13.TabIndex = 14;
             this.label13.Text = "Yelping Since:";
             // 
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(390, 75);
+            this.label12.Location = new System.Drawing.Point(715, 138);
+            this.label12.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(33, 13);
+            this.label12.Size = new System.Drawing.Size(62, 25);
             this.label12.TabIndex = 13;
             this.label12.Text = "Fans:";
             // 
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(292, 75);
+            this.label11.Location = new System.Drawing.Point(535, 138);
+            this.label11.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(34, 13);
+            this.label11.Size = new System.Drawing.Size(64, 25);
             this.label11.TabIndex = 12;
             this.label11.Text = "Stars:";
             // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(292, 35);
+            this.label10.Location = new System.Drawing.Point(535, 65);
+            this.label10.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(38, 13);
+            this.label10.Size = new System.Drawing.Size(70, 25);
             this.label10.TabIndex = 11;
             this.label10.Text = "Name:";
             // 
@@ -644,13 +693,15 @@
             this.dataGridViewTextBoxColumn4,
             this.dataGridViewTextBoxColumn5,
             this.dataGridViewTextBoxColumn6});
-            this.dataGridView2.Location = new System.Drawing.Point(24, 344);
+            this.dataGridView2.Location = new System.Drawing.Point(44, 635);
+            this.dataGridView2.Margin = new System.Windows.Forms.Padding(6);
             this.dataGridView2.MultiSelect = false;
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.ReadOnly = true;
             this.dataGridView2.RowHeadersVisible = false;
+            this.dataGridView2.RowHeadersWidth = 72;
             this.dataGridView2.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView2.Size = new System.Drawing.Size(472, 386);
+            this.dataGridView2.Size = new System.Drawing.Size(865, 713);
             this.dataGridView2.TabIndex = 10;
             // 
             // dataGridViewTextBoxColumn4
@@ -680,18 +731,20 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(22, 328);
+            this.label9.Location = new System.Drawing.Point(40, 606);
+            this.label9.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(41, 13);
+            this.label9.Size = new System.Drawing.Size(77, 25);
             this.label9.TabIndex = 9;
             this.label9.Text = "Friends";
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(525, 12);
+            this.label8.Location = new System.Drawing.Point(962, 22);
+            this.label8.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(123, 13);
+            this.label8.Size = new System.Drawing.Size(226, 25);
             this.label8.TabIndex = 8;
             this.label8.Text = "Latest tips of my friends?";
             // 
@@ -707,13 +760,15 @@
             this.dataGridViewTextBoxColumn3,
             this.TipText,
             this.Date});
-            this.dataGridView1.Location = new System.Drawing.Point(528, 28);
+            this.dataGridView1.Location = new System.Drawing.Point(968, 52);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(6);
             this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersVisible = false;
+            this.dataGridView1.RowHeadersWidth = 72;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(576, 702);
+            this.dataGridView1.Size = new System.Drawing.Size(1056, 1296);
             this.dataGridView1.TabIndex = 7;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
@@ -743,21 +798,24 @@
             // TipText
             // 
             this.TipText.HeaderText = "Tip Text";
+            this.TipText.MinimumWidth = 9;
             this.TipText.Name = "TipText";
             this.TipText.ReadOnly = true;
             // 
             // Date
             // 
             this.Date.HeaderText = "Date";
+            this.Date.MinimumWidth = 9;
             this.Date.Name = "Date";
             this.Date.ReadOnly = true;
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(292, 12);
+            this.label7.Location = new System.Drawing.Point(535, 22);
+            this.label7.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(87, 13);
+            this.label7.Size = new System.Drawing.Size(160, 25);
             this.label7.TabIndex = 4;
             this.label7.Text = "User Information:";
             // 
@@ -766,13 +824,15 @@
             this.userDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.userDataGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.userid});
-            this.userDataGrid.Location = new System.Drawing.Point(24, 54);
+            this.userDataGrid.Location = new System.Drawing.Point(44, 100);
+            this.userDataGrid.Margin = new System.Windows.Forms.Padding(6);
             this.userDataGrid.MultiSelect = false;
             this.userDataGrid.Name = "userDataGrid";
             this.userDataGrid.RowHeadersVisible = false;
+            this.userDataGrid.RowHeadersWidth = 72;
             this.userDataGrid.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.userDataGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.userDataGrid.Size = new System.Drawing.Size(253, 249);
+            this.userDataGrid.Size = new System.Drawing.Size(464, 460);
             this.userDataGrid.TabIndex = 3;
             this.userDataGrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.userDataGrid_CellContentClick);
             this.userDataGrid.SelectionChanged += new System.EventHandler(this.userDataGrid_SelectionChanged);
@@ -789,18 +849,20 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(22, 12);
+            this.label6.Location = new System.Drawing.Point(40, 22);
+            this.label6.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(88, 13);
+            this.label6.Size = new System.Drawing.Size(164, 25);
             this.label6.TabIndex = 2;
             this.label6.Text = "Set Current User:";
             this.label6.Click += new System.EventHandler(this.label6_Click);
             // 
             // userSearchBox
             // 
-            this.userSearchBox.Location = new System.Drawing.Point(24, 28);
+            this.userSearchBox.Location = new System.Drawing.Point(44, 52);
+            this.userSearchBox.Margin = new System.Windows.Forms.Padding(6);
             this.userSearchBox.Name = "userSearchBox";
-            this.userSearchBox.Size = new System.Drawing.Size(253, 20);
+            this.userSearchBox.Size = new System.Drawing.Size(460, 29);
             this.userSearchBox.TabIndex = 1;
             this.userSearchBox.Text = "Enter User Name";
             this.userSearchBox.Click += new System.EventHandler(this.userSearchBox_Click);
@@ -810,6 +872,9 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.infoHours);
+            this.tabPage1.Controls.Add(this.label26);
+            this.tabPage1.Controls.Add(this.SortBy);
             this.tabPage1.Controls.Add(this.label25);
             this.tabPage1.Controls.Add(this.label24);
             this.tabPage1.Controls.Add(this.label23);
@@ -834,19 +899,80 @@
             this.tabPage1.Controls.Add(this.label3);
             this.tabPage1.Controls.Add(this.label4);
             this.tabPage1.Enabled = false;
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Location = new System.Drawing.Point(4, 33);
+            this.tabPage1.Margin = new System.Windows.Forms.Padding(6);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1332, 753);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(6);
+            this.tabPage1.Size = new System.Drawing.Size(2449, 1401);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Business Search";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(1628, 530);
+            this.label25.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(134, 25);
+            this.label25.TabIndex = 20;
+            this.label25.Text = "Filter by Meal:";
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(1633, 183);
+            this.label24.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(163, 25);
+            this.label24.TabIndex = 19;
+            this.label24.Text = "Filter by Attribute:";
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(1634, 44);
+            this.label23.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(135, 25);
+            this.label23.TabIndex = 18;
+            this.label23.Text = "Filter by Price:";
+            // 
+            // MealFilter
+            // 
+            this.MealFilter.FormattingEnabled = true;
+            this.MealFilter.Location = new System.Drawing.Point(1634, 558);
+            this.MealFilter.Margin = new System.Windows.Forms.Padding(28);
+            this.MealFilter.Name = "MealFilter";
+            this.MealFilter.Size = new System.Drawing.Size(406, 186);
+            this.MealFilter.TabIndex = 17;
+            // 
+            // AttributeFilter
+            // 
+            this.AttributeFilter.FormattingEnabled = true;
+            this.AttributeFilter.Location = new System.Drawing.Point(1633, 212);
+            this.AttributeFilter.Margin = new System.Windows.Forms.Padding(28);
+            this.AttributeFilter.Name = "AttributeFilter";
+            this.AttributeFilter.Size = new System.Drawing.Size(406, 290);
+            this.AttributeFilter.TabIndex = 16;
+            // 
+            // PriceFilter
+            // 
+            this.PriceFilter.ColumnWidth = 100;
+            this.PriceFilter.FormattingEnabled = true;
+            this.PriceFilter.Location = new System.Drawing.Point(1634, 74);
+            this.PriceFilter.Margin = new System.Windows.Forms.Padding(28);
+            this.PriceFilter.MultiColumn = true;
+            this.PriceFilter.Name = "PriceFilter";
+            this.PriceFilter.Size = new System.Drawing.Size(406, 82);
+            this.PriceFilter.TabIndex = 15;
+            // 
             // checkinsButton
             // 
-            this.checkinsButton.Location = new System.Drawing.Point(101, 612);
+            this.checkinsButton.Location = new System.Drawing.Point(1412, 977);
+            this.checkinsButton.Margin = new System.Windows.Forms.Padding(6);
             this.checkinsButton.Name = "checkinsButton";
-            this.checkinsButton.Size = new System.Drawing.Size(100, 23);
+            this.checkinsButton.Size = new System.Drawing.Size(170, 40);
             this.checkinsButton.TabIndex = 16;
             this.checkinsButton.Text = "Show Checkins";
             this.checkinsButton.UseVisualStyleBackColor = true;
@@ -854,79 +980,59 @@
             // 
             // AttriCatView
             // 
-            this.AttriCatView.Location = new System.Drawing.Point(970, 453);
+            this.AttriCatView.Location = new System.Drawing.Point(1633, 853);
+            this.AttriCatView.Margin = new System.Windows.Forms.Padding(28);
             this.AttriCatView.Name = "AttriCatView";
-            treeNode1.Name = "Attributes";
-            treeNode1.Text = "Attributes";
-            treeNode2.Name = "Categories";
-            treeNode2.Text = "Categories";
+            treeNode5.Name = "Attributes";
+            treeNode5.Text = "Attributes";
+            treeNode6.Name = "Categories";
+            treeNode6.Text = "Categories";
             this.AttriCatView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2});
+            treeNode5,
+            treeNode6});
             this.AttriCatView.ShowRootLines = false;
-            this.AttriCatView.Size = new System.Drawing.Size(216, 196);
+            this.AttriCatView.Size = new System.Drawing.Size(406, 316);
             this.AttriCatView.TabIndex = 15;
             // 
-            this.PriceFilter.ColumnWidth = 100;
-            this.PriceFilter.FormattingEnabled = true;
-            this.PriceFilter.Location = new System.Drawing.Point(891, 40);
-            this.PriceFilter.Margin = new System.Windows.Forms.Padding(15);
-            this.PriceFilter.MultiColumn = true;
-            this.PriceFilter.Name = "PriceFilter";
-            this.PriceFilter.Size = new System.Drawing.Size(223, 34);
-            this.PriceFilter.TabIndex = 15;
+            // SortBy
             // 
-            // AttributeFilter
+            this.SortBy.AccessibleName = "";
+            this.SortBy.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.SortBy.FormattingEnabled = true;
+            this.SortBy.Location = new System.Drawing.Point(1634, 810);
+            this.SortBy.Margin = new System.Windows.Forms.Padding(6);
+            this.SortBy.Name = "SortBy";
+            this.SortBy.Size = new System.Drawing.Size(406, 32);
+            this.SortBy.TabIndex = 21;
             // 
-            this.AttributeFilter.FormattingEnabled = true;
-            this.AttributeFilter.Location = new System.Drawing.Point(891, 102);
-            this.AttributeFilter.Margin = new System.Windows.Forms.Padding(15);
-            this.AttributeFilter.Name = "AttributeFilter";
-            this.AttributeFilter.Size = new System.Drawing.Size(223, 154);
-            this.AttributeFilter.TabIndex = 16;
+            // label26
             // 
-            // MealFilter
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(1630, 779);
+            this.label26.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(151, 25);
+            this.label26.TabIndex = 22;
+            this.label26.Text = "Sort Results By:";
             // 
-            this.MealFilter.FormattingEnabled = true;
-            this.MealFilter.Location = new System.Drawing.Point(891, 286);
-            this.MealFilter.Margin = new System.Windows.Forms.Padding(15);
-            this.MealFilter.Name = "MealFilter";
-            this.MealFilter.Size = new System.Drawing.Size(223, 94);
-            this.MealFilter.TabIndex = 17;
+            // infoHours
             // 
-            // label23
-            // 
-            this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(891, 24);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(73, 13);
-            this.label23.TabIndex = 18;
-            this.label23.Text = "Filter by Price:";
-            // 
-            // label24
-            // 
-            this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(891, 86);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(88, 13);
-            this.label24.TabIndex = 19;
-            this.label24.Text = "Filter by Attribute:";
-            // 
-            // label25
-            // 
-            this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(888, 271);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(72, 13);
-            this.label25.TabIndex = 20;
-            this.label25.Text = "Filter by Meal:";
+            this.infoHours.AutoSize = true;
+            this.infoHours.Location = new System.Drawing.Point(534, 992);
+            this.infoHours.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.infoHours.Name = "infoHours";
+            this.infoHours.Size = new System.Drawing.Size(64, 25);
+            this.infoHours.TabIndex = 23;
+            this.infoHours.Text = "Hours";
+            this.infoHours.Visible = false;
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1433, 683);
+            this.ClientSize = new System.Drawing.Size(2627, 1261);
             this.Controls.Add(this.tabControl1);
+            this.Margin = new System.Windows.Forms.Padding(6);
             this.Name = "Form1";
             this.Text = "YelpApp";
             ((System.ComponentModel.ISupportInitialize)(this.businessGrid)).EndInit();
@@ -1023,6 +1129,9 @@
         private System.Windows.Forms.TreeView AttriCatView;
         private System.Windows.Forms.PageSetupDialog pageSetupDialog1;
         private System.Windows.Forms.Button checkinsButton;
+        public System.Windows.Forms.ComboBox SortBy;
+        public System.Windows.Forms.Label label26;
+        public System.Windows.Forms.Label infoHours;
     }
 }
 

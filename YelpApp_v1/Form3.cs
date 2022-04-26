@@ -28,7 +28,7 @@ namespace YelpApp_v1
 
         private string buildConnectionString()
         {
-            return "Host = localhost; Username = postgres; Database = yelpdb; password = password;";
+            return "Host = localhost; Username = postgres; Database = yelpdb; password = Password123;";
         }
 
         public void executeQuery(string sqlStr, Action<NpgsqlDataReader> myf)
