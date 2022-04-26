@@ -41,6 +41,7 @@
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.likeButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.tipsGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -83,6 +84,7 @@
             this.tipsGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.tipsGrid.Size = new System.Drawing.Size(451, 289);
             this.tipsGrid.TabIndex = 7;
+            this.tipsGrid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tipsGrid_CellContentClick);
             // 
             // date
             // 
@@ -133,7 +135,6 @@
             this.label1.Size = new System.Drawing.Size(59, 13);
             this.label1.TabIndex = 9;
             this.label1.Text = "Friend Tips";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // dataGridView1
             // 
@@ -179,9 +180,21 @@
             this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
             this.dataGridViewTextBoxColumn4.ReadOnly = true;
             // 
+            // likeButton
+            // 
+            this.likeButton.Location = new System.Drawing.Point(469, 42);
+            this.likeButton.Name = "likeButton";
+            this.likeButton.Size = new System.Drawing.Size(58, 23);
+            this.likeButton.TabIndex = 11;
+            this.likeButton.Text = "Like";
+            this.likeButton.UseVisualStyleBackColor = true;
+            this.likeButton.Visible = false;
+            this.likeButton.Click += new System.EventHandler(this.likeButton_Click);
+            // 
             // Form2
             // 
             this.ClientSize = new System.Drawing.Size(539, 555);
+            this.Controls.Add(this.likeButton);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label6);
@@ -212,6 +225,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private System.Windows.Forms.Button likeButton;
     }
 }
 

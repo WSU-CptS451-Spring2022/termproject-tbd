@@ -14,6 +14,8 @@ namespace YelpApp_v1
     public partial class Form2 : Form
     {
         string business_id;
+        string tip_date;
+        string name;
         Form1 main_set;
 
         public Form2(Form1 main)
@@ -119,7 +121,8 @@ namespace YelpApp_v1
             string timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             if(tip.Length != 0)
             {
-                string sqlStr = $"INSERT INTO Tip(userid, business_id, tip_text, tip_date, num_of_likes) VALUES('PROFILE', '{business_id}', '{tip}', '{timestamp}', 0);";
+                
+                string sqlStr = $"INSERT INTO Tip(userid, business_id, tip_text, tip_date, num_of_likes) VALUES('{main_set.userDataGrid.SelectedCells[0].Value.ToString()}', '{business_id}', '{tip}', '{timestamp}', 0);";
                 executeNonQuery(sqlStr);
                 tipsGrid.Rows.Clear();
                 main_set.refresh_user();
@@ -130,9 +133,31 @@ namespace YelpApp_v1
             tipTextBox.Clear();
         }
 
-        private void label1_Click(object sender, EventArgs e)
+        private void tipsGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            DataGridViewRow row = tipsGrid.SelectedRows[0];
+            this.tip_date = row.Cells["date"].Value.ToString();
+            this.name = row.Cells["username"].Value.ToString();
+            likeButton.Visible = true;
+        }
 
+        private void likeTip(NpgsqlDataReader reader)
+        {
+            string userid = reader.GetString(0).ToString();
+            string businessid = reader.GetString(1).ToString();
+            string tip_text = reader.GetString(2).ToString();
+            string sqlStr = $"UPDATE Tip SET num_of_likes = num_of_likes + 1 WHERE userid = '{userid}' and business_id = '{this.business_id}' and tip_text = '{tip_text}';";
+            executeNonQuery(sqlStr);
+            tipsGrid.Rows.Clear();
+            main_set.refresh_user();
+            sqlStr = $"SELECT tip_date, username, num_of_likes, tip_text FROM Tip INNER JOIN Users ON Users.userid = Tip.userid WHERE business_id = '{this.business_id}' ORDER BY tip_date desc;";
+            executeQuery(sqlStr, addTipsTable);
+        }
+
+        private void likeButton_Click(object sender, EventArgs e)
+        {
+            string sqlStr = $"SELECT Tip.userid, business_id, tip_text FROM Tip INNER JOIN Users on Users.userid = Tip.userid WHERE business_id = '{this.business_id}' AND tip_date = '{this.tip_date}' AND username = '{this.name}';";
+            executeQuery(sqlStr, likeTip);
         }
     }
 }
